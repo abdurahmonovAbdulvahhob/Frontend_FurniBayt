@@ -1,14 +1,18 @@
-import React from "react";
+import Products from "@/components/products/Products";
 import { useGetProductsQuery } from "@/redux/api/product-api";
 import { IProduct } from "@/types";
-import Hero from "./Hero";
+import React from "react";
 import Browse from "./Browse";
-import Products from "@/components/products/Products";
+import Hero from "./Hero";
+import SwiperInfinite from "./swiper_infinite/swiper_infinite";
+import Insparation from "./Insparation";
 
 const Home: React.FC = () => {
-
   // Fetch products from API
-  const { data, isLoading, error } = useGetProductsQuery({ order: "desc" });
+  const { data, isLoading, error } = useGetProductsQuery({
+    order: "desc",
+    limit: 12,
+  });
 
   // Loading and error handling
   if (isLoading) {
@@ -27,6 +31,8 @@ const Home: React.FC = () => {
       <Hero />
       <Browse />
       <Products products={products} />
+      <Insparation />
+      <SwiperInfinite />
     </div>
   );
 };
