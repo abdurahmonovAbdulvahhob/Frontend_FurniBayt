@@ -13,27 +13,36 @@ import * as yup from "yup";
 
 const schema = yup
   .object({
-    first_name: yup.string().required(),
-    last_name: yup.string().required(),
-    email: yup.string().email().required(),
-    password: yup.string().required(),
-    confirm_password: yup.string().required(),
+    first_name: yup.string().required("First name is required"),
+    last_name: yup.string().required("Last name is required"),
+    email: yup
+      .string()
+      .email("Invalid email format")
+      .required("Email is required"),
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(4, "Password must be at least 4 characters"),
+    confirm_password: yup
+      .string()
+      .oneOf([yup.ref("password")], "Passwords must match")
+      .required("Confirm password is required"),
   })
   .required();
+
 
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [createCustomer, { isLoading }] = useCreateCustomerMutation();
-  console.log();
   const [createOtp, { isLoading: otpLoading }] = useCreateOtpMutation();
   console.log(isLoading);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -41,9 +50,10 @@ const SignUp = () => {
     createCustomer(data)
       .unwrap()
       .then((res) => {
-        console.log(res.verification_key,"123");
-        
         toast.success("Welcome", { position: "bottom-right" });
+         if (!res.verification_key) {
+           throw new Error("Verification key is missing");
+         }
         dispatch(
           saveEmail({
             email: data.email,
@@ -61,8 +71,8 @@ const SignUp = () => {
       })
       .catch((err) => {
         console.log(err);
-        
-        let msg = err.data.message;
+
+        let msg = err?.data?.message;
         toast.error(Array.isArray(msg) ? msg[0] : msg, {
           position: "bottom-right",
         });
@@ -98,6 +108,11 @@ const SignUp = () => {
                   placeholder="First name"
                   required
                 />
+                {errors.first_name && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.first_name.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label
@@ -115,6 +130,11 @@ const SignUp = () => {
                   placeholder="Last name"
                   required
                 />
+                {errors.last_name && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.last_name.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label
@@ -132,6 +152,11 @@ const SignUp = () => {
                   placeholder="Email"
                   required
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label
@@ -149,6 +174,11 @@ const SignUp = () => {
                   placeholder="Password"
                   required
                 />
+                {errors.password && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label
@@ -166,25 +196,12 @@ const SignUp = () => {
                   placeholder="Confirm password"
                   required
                 />
+                {errors.confirm_password && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.confirm_password.message}
+                  </p>
+                )}
               </div>
-              {/* <div>
-                <label
-                  htmlFor="phone_number"
-                  className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Phone number
-                </label>
-                <input
-                  {...register("phone_number")}
-                  type="text"
-                  name="phone_number"
-                  id="phone_number"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Phone number"
-                  required
-                />
-              </div> */}
-
               <div className="flex items-start">
                 <div className="flex items-center h-5">
                   <input
@@ -210,7 +227,6 @@ const SignUp = () => {
                   </label>
                 </div>
               </div>
-
               <div>
                 <button
                   disabled={isLoading || otpLoading}
@@ -219,7 +235,6 @@ const SignUp = () => {
                   {isLoading || otpLoading ? "Loading..." : "Sign up"}
                 </button>
               </div>
-
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
                 <Link
