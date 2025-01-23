@@ -3,34 +3,18 @@ import heroImage from "../../assets/images/hero.png";
 
 const Hero = () => {
   return (
-    <div className="hero container relative w-full h-auto font-poppins">
-      <img
-        src={heroImage}
-        alt="Interior design"
-        className="w-full h-full object-cover"
-      />
-      <div
-        className="absolute top-1/2 right-10 transform -translate-y-1/2 bg-[#F9F1E7] p-8 rounded-lg shadow-lg 
-        max-w-x s sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
-      >
-        <p className="text-[#3A3A3A] text-sm sm:text-base tracking-wide font-medium">
-          New Arrival
-        </p>
-        <h1
-          className="text-[#B88E2F] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mt-2 
-          sm:w-full md:w-[400px] lg:w-[500px] xl:w-[560px]"
-        >
+    <div className="bg-hero-image bg-cover bg-center h-[716px] flex items-center justify-end px-16 font-poppins">
+      <div className="text-start w-[700px] bg-white bg-opacity-70 p-12 rounded-lg max-w-lg max-[640px]:max-w-xs sm:max-w-xs md:max-w-sm lg:max-w-xl z-10">
+        <h4 className="text-sm text-gray-500 uppercase mb-4">New Arrival</h4>
+        <h1 className="text-2xl max-[640px]:text-3xl sm:text-3xl md:text-4xl lg:text-5xl lg:w-[560px] lg:h-[100px] leading-[65px] font-bold text-bg-primary mb-4">
           Discover Our <br /> New Collection
         </h1>
-        <p className="text-[#898989] text-sm sm:text-base md:text-lg mt-4">
+        <p className="text-gray-500 mb-6 text-sm sm:text-base md:text-lg lg:text-xl">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
           tellus, luctus nec ullamcorper mattis.
         </p>
-        <button
-          className="mt-6 bg-[#B88E2F] text-[#F9F1E7] py-3 px-6 text-sm sm:text-base font-medium
-          w-full sm:w-[180px] md:w-[200px] lg:w-[210px] hover:bg-yellow-800 duration-300"
-        >
-          Buy Now
+        <button className="w-[210px] h-[60px] bg-bg-primary text-white px-6 py-3 mt-6 font-bold rounded-sm hover:bg-yellow-700 duration-300">
+          BUY NOW
         </button>
       </div>
     </div>
