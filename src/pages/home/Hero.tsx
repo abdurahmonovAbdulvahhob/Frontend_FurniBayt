@@ -11,7 +11,7 @@ const Hero = () => {
       />
       <div
         className="absolute top-1/2 right-10 transform -translate-y-1/2 bg-[#F9F1E7] p-8 rounded-lg shadow-lg 
-        max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
+        max-w-x s sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
       >
         <p className="text-[#3A3A3A] text-sm sm:text-base tracking-wide font-medium">
           New Arrival
@@ -28,7 +28,7 @@ const Hero = () => {
         </p>
         <button
           className="mt-6 bg-[#B88E2F] text-[#F9F1E7] py-3 px-6 text-sm sm:text-base font-medium
-          w-full sm:w-[180px] md:w-[200px] lg:w-[210px] hover:bg-yellow-700 duration-300"
+          w-full sm:w-[180px] md:w-[200px] lg:w-[210px] hover:bg-yellow-800 duration-300"
         >
           Buy Now
         </button>
