@@ -1,6 +1,5 @@
 import React from "react";
 import { useGetProductsQuery } from "@/redux/api/product-api";
-import Product from "@/components/product/Product";
 import { IProduct } from "@/types";
 import Hero from "./Hero";
 import Browse from "./Browse";
