@@ -24,7 +24,7 @@ const Browse = () => {
     <section className="py-12">
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-semibold">
+          <h2 className="text-3xl md:text-4xl font-bold">
             Browse The Range
           </h2>
           <p className="text-[#666666] text-lg md:text-xl max-w-2xl mx-auto mt-2">

@@ -2,11 +2,13 @@ import { NavLink } from "react-router-dom";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="w-full bg-gray-50 py-16">
+    <footer className="w-full bg-gray-100 py-16">
       <div className="container mx-auto py-16 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Company Info */}
         <div className="space-y-4">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">Furnibayt.</h2>
+          <h2 className="text-3xl font-bold text-bg-primary mb-4">
+            Furnibayt.
+          </h2>
           <address className="text-slate-500 text-md not-italic space-y-1">
             <p className="text-[#9F9F9F] text-lg">
               400 University Drive Suite 200 Coral <br /> Gables,
@@ -17,9 +19,7 @@ const Footer: React.FC = () => {
 
         {/* Links */}
         <div>
-          <h3 className="text-lg font-semibold mb-4 text-gray-500">
-            Links
-          </h3>
+          <h3 className="text-lg font-semibold mb-4 text-gray-500">Links</h3>
           <nav className="flex flex-col space-y-2">
             <NavLink
               to="/"
@@ -66,9 +66,7 @@ const Footer: React.FC = () => {
 
         {/* Help */}
         <div>
-          <h3 className="text-lg font-semibold mb-4 text-gray-500">
-            Help
-          </h3>
+          <h3 className="text-lg font-semibold mb-4 text-gray-500">Help</h3>
           <nav className="flex flex-col space-y-2">
             <NavLink
               to="/payment-options"
@@ -112,11 +110,11 @@ const Footer: React.FC = () => {
             <input
               type="email"
               placeholder="Enter Your Email Address"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray text-gray-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bg-primary text-gray-500"
             />
             <button
               type="submit"
-              className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700"
+              className="px-4 py-2 bg-bg-primary text-white rounded-lg hover:bg-yellow-700"
             >
               SUBSCRIBE
             </button>

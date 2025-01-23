@@ -1,18 +1,30 @@
-import React from "react";
+import { useEffect, useState } from "react";
 
-export default function useOnlineStatus() {
-  const [online, setOnline] = React.useState(navigator.onLine);
-  React.useEffect(() => {
-    function updateOnlineStatus() {
-      setOnline(navigator.onLine);
+const useOnlineStatus = () => {
+  const [online, setOnline] = useState<boolean>(navigator.onLine);
+  const [firstEnter, setFirstEnter] = useState<boolean>(true);
+
+  useEffect(() => {
+    const handleOnline = () => setOnline(true);
+    const handleOffline = () => setOnline(false);
+
+    // Brauzerning online/offline hodisalariga quloq solish
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    // Birinchi kirish holatini belgilash
+    if (firstEnter) {
+      setFirstEnter(false);
     }
-    window.addEventListener("online", updateOnlineStatus);
-    window.addEventListener("offline", updateOnlineStatus);
-    // cleanup function - 
+
+    // Cleanup: Quloq soluvchilarni olib tashlash
     return () => {
-      window.removeEventListener("online", updateOnlineStatus);
-      window.removeEventListener("offline", updateOnlineStatus);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
-  }, []);
-  return online;
-}
+  }, [firstEnter]);
+
+  return { online, firstEnter };
+};
+
+export default useOnlineStatus;
