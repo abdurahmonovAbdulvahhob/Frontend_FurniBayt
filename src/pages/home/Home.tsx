@@ -3,6 +3,7 @@ import { useGetProductsQuery } from "@/redux/api/product-api";
 import { IProduct } from "@/types";
 import Hero from "./Hero";
 import Browse from "./Browse";
+import Products from "@/components/products/Products";
 
 const Home: React.FC = () => {
 
