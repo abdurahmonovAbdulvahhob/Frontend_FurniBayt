@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "@/assets/logo/logo1-removebg-preview.png"; // To'g'ri manba
+// import logo from "@/assets/logo/logo1-removebg-preview.png"; // To'g'ri manba
 import { FiSearch } from "react-icons/fi";
 import { useGetProductsQuery } from "@/redux/api/product-api";
 import { IProduct } from "@/types";
@@ -47,7 +47,7 @@ const HeaderSearch: FC<{
         className="absolute left-5 top-5 flex items-center gap-2 font-poppins cursor-pointer"
         onClick={handleNavigateHome}
       >
-        <img src={logo} alt="logo" className="h-10 w-auto" />
+        {/* <img  alt="logo" className="h-10 w-auto" /> */}
       </div>
 
       {/* Qidiruv inputi */}
