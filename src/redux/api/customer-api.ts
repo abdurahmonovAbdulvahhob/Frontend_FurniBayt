@@ -10,6 +10,12 @@ const extendedApi = mainApi.injectEndpoints({
         body,
       }),
     }),
+    checkToken: build.query<any, any>({
+      query: () => ({
+        url: "auth/check-token",
+        method: "GET",
+      }),
+    }),
     createOtp: build.mutation<any, { email: string }>({
       query: (body) => ({
         url: "auth/newotp",
@@ -17,10 +23,13 @@ const extendedApi = mainApi.injectEndpoints({
         body,
       }),
     }),
-    verifyOtp: build.mutation<any, { email: string; otp: string, verification_key: string}>({
+    verifyOtp: build.mutation<
+      any,
+      { email: string; otp: string; verification_key: string }
+    >({
       query: (body) => ({
         url: "auth/verifyotp",
-        method: "POST", 
+        method: "POST",
         body,
       }),
     }),
