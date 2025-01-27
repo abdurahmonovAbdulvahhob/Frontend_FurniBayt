@@ -10,13 +10,16 @@ import ShopAdvantage from "../../components/Shop_advantage/Shop_advantage";
 
 const Shop = () => {
   const [page, setPage] = useState<number>(1);
-  const { data, isLoading } = useGetProductsQuery({ limit: 12, page });
+  const [limit, setLimit] = useState<number>(16);
+  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false); // Filter ochilgan yoki yopilganligini nazorat qilish
+
+  const { data, isLoading } = useGetProductsQuery({ limit, page });
 
   useEffect(() => {
     console.log("Kelgan data:", data);
   }, [data]);
 
-  const totalPages = data ? Math.ceil(data?.data?.total / 12) : 0;
+  const totalPages = data ? Math.ceil(data?.data?.total / limit) : 0;
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [page]);
@@ -29,13 +32,31 @@ const Shop = () => {
     setPage(value);
   };
 
+  const handleLimitChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(event.target.value);
+    if (value >= 1 && value <= 32) {
+      setLimit(value);
+      setPage(1);
+    }
+  };
+
+  const toggleFilter = () => {
+    setIsFilterOpen(!isFilterOpen);
+  };
+
   return (
     <>
       <Hero />
       <div className="bg-[#F9F1E7] dark:bg-[#645644] h-[100px] grid place-items-center font-poppins mb-16">
         <div className="container flex justify-between">
           <div className="flex justify-between items-center gap-[24px]">
-            <div className="flex justify-between items-center gap-[12px] cursor-pointer hover:text-bg-primary duration-300">
+            <div
+              className={`flex justify-between items-center gap-[12px] cursor-pointer 
+              hover:text-bg-primary duration-300 ${
+                isFilterOpen ? "text-bg-primary" : ""
+              }`}
+              onClick={toggleFilter}
+            >
               <GiSettingsKnobs className="w-[25px] h-[25px]" />
               <p className="text-[20px] leading-[30px] font-[400]">Filter</p>
             </div>
@@ -46,14 +67,20 @@ const Shop = () => {
               <BsViewList className="w-[28px] h-[28px]" />
             </div>
             <div>|</div>
-            <div>Showing 1–16 of 32 results</div>
+            <div>
+              Showing 1–{limit} of {data?.data?.total || 0} results
+            </div>
           </div>
           <div className="flex justify-between items-center gap-6">
             <div className="flex gap-3 items-center cursor-pointer hover:text-bg-primary duration-300">
               <p>Show</p>
               <input
+                type="number"
                 placeholder="16"
-                maxLength={3}
+                value={limit}
+                onChange={handleLimitChange}
+                max={32}
+                min={1}
                 className="w-[55px] h-[55px] bg-white dark:bg-slate-100 outline-none text-[20px] text-center rounded-sm text-bg-primary"
               />
             </div>
@@ -67,6 +94,14 @@ const Shop = () => {
           </div>
         </div>
       </div>
+
+      {isFilterOpen && (
+        <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-lg mt-4 container">
+          <h3 className="text-xl font-semibold mb-4">Filter Options</h3>
+          <p>Here comes the filter settings...</p>
+        </div>
+      )}
+
       <section className="container">
         {isLoading && (
           <p className="my-8 text-center text-xl font-semibold text-gray-700 dark:text-white">
