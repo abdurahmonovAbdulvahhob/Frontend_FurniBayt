@@ -1,4 +1,3 @@
-import React from "react"
 
 const Shop = () => {
   return (
@@ -6,4 +5,4 @@ const Shop = () => {
   )
 }
 
-export default React.memo(Shop)
+export default Shop
