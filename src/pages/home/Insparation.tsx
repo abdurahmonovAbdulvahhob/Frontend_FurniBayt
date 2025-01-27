@@ -29,13 +29,13 @@ const Insparation = () => {
   ];
 
   return (
-    <div id="inspiration" className="bg-[#FCF8F3] py-16">
-      <div className="container mx-auto flex flex-col items-center lg:flex-row lg:items-center lg:justify-between gap-8 px-6 lg:px-0">
+    <div className="bg-[#FCF8F3] dark:bg-zinc-900 py-16">
+      <div className="container mx-auto flex flex-col items-center lg:flex-row lg:items-center lg:justify-between gap-12 px-4 sm:px-6 lg:px-8">
         <div className="text-center lg:text-left lg:w-1/2">
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-4">
             50+ Beautiful Rooms Inspiration
           </h2>
-          <p className="text-gray-600 text-lg leading-relaxed mb-6">
+          <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg leading-relaxed mb-6">
             Our designers have crafted a variety of beautiful room prototypes to
             inspire your next space transformation.
           </p>
@@ -44,11 +44,16 @@ const Insparation = () => {
           </button>
         </div>
 
-        <div className="lg:w-1/2">
+        <div className="w-full lg:w-1/2">
           <Swiper
             effect="coverflow"
             centeredSlides={true}
-            slidesPerView={2}
+            slidesPerView={1}
+            breakpoints={{
+              640: { slidesPerView: 2 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 2 },
+            }}
             navigation
             pagination={{ clickable: true }}
             coverflowEffect={{
@@ -66,15 +71,14 @@ const Insparation = () => {
                   <img
                     src={image.src}
                     alt={image.title}
-                    className="rounded-lg shadow-lg w-full transition-transform duration-300"
+                    className="rounded-lg shadow-lg w-[500px] max-[400px]:w-[200px] transition-transform duration-300 group-hover:scale-105"
                   />
-
-                  <div className="absolute bottom-10 left-5 w-[217px] bg-white bg-opacity-30 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center px-6">
-                    <div className="text-black py-5">
+                  <div className="absolute bottom-10 left-5 w-[90%] bg-white bg-opacity-50 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center px-6 py-4 rounded-lg">
+                    <div className="text-black">
                       <p className="text-sm mb-1">01 - Bed Room</p>
-                      <h3 className="text-[28px] font-bold">Inner Peace</h3>
+                      <h3 className="text-lg font-bold">Inner Peace</h3>
                     </div>
-                    <button className="absolute bottom-0 left-[calc(5%+196px)] bg-[#B88E2F] hover:bg-[#9C792A] text-white py-2 px-4  shadow-md transition-all">
+                    <button className="ml-auto bg-[#B88E2F] hover:bg-[#9C792A] text-white py-2 px-4 rounded shadow-md transition-all">
                       →
                     </button>
                   </div>

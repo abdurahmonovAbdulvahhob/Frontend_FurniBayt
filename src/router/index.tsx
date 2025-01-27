@@ -6,6 +6,7 @@ const Shop = lazy(()=> import("@/pages/shop/Shop"))
 const About = lazy(()=> import("@/pages/about/About"))
 const Contact = lazy(() => import("@/pages/contact/Contact"));
 const SignUp = lazy(() => import("@/pages/auth/sign-up/SignUp"));
+import Auth from "@/pages/auth/Auth";
 const Otp = lazy(() => import("@/pages/auth/otp/Otp"));
 const Profile = lazy(() => import("@/pages/auth/profile/Profile"));
 const Search = lazy(() => import("@/components/search/Search"));
@@ -59,28 +60,22 @@ const Routers = () => {
               ),
             },
             {
-              path: "/auth/sign-up",
+              path: "/auth",
               element: (
                 <SuspenseContainer>
-                  <SignUp />
+                  <Auth />
                 </SuspenseContainer>
               ),
-            },
-            {
-              path: "/auth/otp",
-              element: (
-                <SuspenseContainer>
-                  <Otp />
-                </SuspenseContainer>
-              ),
-            },
-            {
-              path: "/auth/profile",
-              element: (
-                <SuspenseContainer>
-                  <Profile />
-                </SuspenseContainer>
-              ),
+              children: [
+                {
+                  path: "profile",
+                  element: (
+                    <SuspenseContainer>
+                      <Profile />
+                    </SuspenseContainer>
+                  ),
+                },
+              ],
             },
             {
               path: "/search",
@@ -115,6 +110,22 @@ const Routers = () => {
               ),
             },
           ],
+        },
+        {
+          path: "/auth/sign-up",
+          element: (
+            <SuspenseContainer>
+              <SignUp />
+            </SuspenseContainer>
+          ),
+        },
+        {
+          path: "/auth/otp",
+          element: (
+            <SuspenseContainer>
+              <Otp />
+            </SuspenseContainer>
+          ),
         },
       ])}
     </>

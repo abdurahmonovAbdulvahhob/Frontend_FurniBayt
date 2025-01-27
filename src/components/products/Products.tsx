@@ -27,11 +27,11 @@ const Products = ({ products }: ProductsProps) => {
             </div>
 
             {/* Hover Effect */}
-            <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            {/* <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
               <button className="bg-white text-black px-4 py-2 rounded-md">
                 Add to Cart
               </button>
-            </div>
+            </div> */}
 
             {/* Product Details */}
             <div className="py-4 px-4 bg-[#F4F5F7] transition-colors duration-300">
