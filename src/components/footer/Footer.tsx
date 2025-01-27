@@ -1,6 +1,22 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import FooterSkeleton from "../../skleton/FooterSkeleton/FooterSkeleton";
 
 const Footer: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false); 
+    }, 500); 
+  }, []);
+
+  if (isLoading) {
+    return <>
+    <FooterSkeleton/>
+    </>
+  }
+
   return (
     <footer className="w-full bg-gray-100 py-16">
       <div className="container mx-auto py-16 grid grid-cols-1 md:grid-cols-4 gap-8">

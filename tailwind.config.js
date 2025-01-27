@@ -9,7 +9,10 @@ export default {
         montserrat: ['"Montserrat", sans-serif'],
       },
       colors: {
-        "bg-primary": "#B88E2F",
+        "bg-primary":"#B88E2F",
+        "bg-skeleton":"#CBD5E1",
+        "text-primary":"#212121",
+        "text-secondary":"#636363",
       },
       backgroundImage: {
         "hero-image": 'url("@/assets/images/heroImage.png")',
