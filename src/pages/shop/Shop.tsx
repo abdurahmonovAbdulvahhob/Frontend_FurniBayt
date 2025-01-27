@@ -6,6 +6,7 @@ import { BsViewList } from "react-icons/bs";
 import Hero from "./Hero";
 import { PiCirclesFourFill } from "react-icons/pi";
 import Product from "../../components/product/Product";
+import ShopAdvantage from "../../components/Shop_advantage/Shop_Advantage";
 
 const Shop = () => {
   const [page, setPage] = useState<number>(1);
@@ -118,6 +119,7 @@ const Shop = () => {
           />
         </div>
       </section>
+      <ShopAdvantage/>
     </>
   );
 };
