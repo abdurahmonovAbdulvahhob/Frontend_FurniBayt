@@ -43,12 +43,12 @@
     return (
       <div className="bg-hero-image bg-cover bg-center font-poppins">
         <div className="flex items-center container justify-end h-[716px] border">
-          <div className="text-start bg-white bg-opacity-70 p-8 rounded-lg max-w-lg max-[640px]:max-w-xs sm:max-w-xs md:max-w-sm lg:max-w-xl">
-            <div className="h-6 w-32 bg-gray-300 rounded mb-4"></div>
-              <div className="h-[100px] w-[80%] lg:w-[560px] bg-gray-300 rounded mb-6"></div>
+          <div className="text-start  bg-opacity-70 p-8 rounded-lg max-w-lg max-[640px]:max-w-xs sm:max-w-xs md:max-w-sm lg:max-w-xl">
+            {/* <div className="h-6 w-32 bg-gray-300 rounded mb-4"></div> */}
+              {/* <div className="h-[100px] w-[80%] lg:w-[560px] bg-gray-300 rounded mb-6"></div>
               <div className="h-6 w-full lg:w-[500px] bg-gray-300 rounded mb-2"></div>
-            <div className="h-6 w-4/5 bg-gray-300 rounded mb-6"></div>
-              <div className="h-[60px] w-[210px] bg-gray-300 rounded"></div>
+              <div className="h-6 w-4/5 bg-gray-300 rounded mb-6"></div>
+              <div className="h-[60px] w-[210px] bg-gray-300 rounded"></div> */}
           </div>
         </div>
       </div>

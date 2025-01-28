@@ -25,7 +25,7 @@ const Home: React.FC = () => {
     const timer = setTimeout(() => {
       setIsLoading(false); // Stop loading after 1 second (or your desired duration)
       setSkeletonVisible(false);
-    }, 1000); // Set a delay before changing the loading state
+    }, 50); // Set a delay before changing the loading state
 
     return () => clearTimeout(timer); // Cleanup the timeout on component unmount
   }, []); // Empty dependency array to run only once when the component mounts

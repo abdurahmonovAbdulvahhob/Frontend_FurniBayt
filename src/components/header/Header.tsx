@@ -18,9 +18,8 @@ const Header: React.FC = () => {
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
 
-
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 500);
+    const timer = setTimeout(() => setIsLoading(false), 50);
     return () => clearTimeout(timer);
   }, []);
 
@@ -39,6 +38,7 @@ const Header: React.FC = () => {
           transition-all duration-300 
           ${!online && firstEnter ? "top-6" : "top-0"}
         `}
+        style={{ height: "80px" }} // header balandligini aniq ko'rsatish
       >
         <div className="container mx-auto h-20 flex justify-between items-center font-poppins px-4 lg:px-0">
           {/* Logo */}
@@ -88,6 +88,13 @@ const Header: React.FC = () => {
           </div>
         </div>
       </header>
+
+      {/* Sahifa kontentiga padding qo'shish */}
+      <div className="pt-20 lg:pt-[80px]"> 
+        {/* 80px bu headerning balandligi */}
+        
+        {/* Sahifa kontentini shu yerda joylashtirasiz */}
+      </div>
 
       {/* Bottom Navigation for Mobile */}
       <nav
