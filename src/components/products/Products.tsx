@@ -28,40 +28,27 @@ const Products = ({ products }: ProductsProps) => {
         )}
       </div>
       <div className="grid grid-cols-4 gap-8 max-[1240px]:grid-cols-3 max-[990px]:grid-cols-2 max-[620px]:gap-2">
-
         {products && products.length > 0 ? (
-        products.map((product) => (
-          <div
-            key={product.id}
-            className="relative group overflow-hidden rounded-lg shadow-md"
-          >
-            {/* Product Image */}
-            <div className="relative w-full h-[301px] max-[620px]:h-[240px] max-[430px]:h-[200px]">
-              <img
-                onClick={() => navigate(`/product/${product.id}`)} // Navigate qo‘shildi
-                className="w-full h-full bg-no-repeat bg-center bg-cover"
-                src={`${product.image[0]}`}
-                alt={product.title}
-              />
-            </div>
+          products.map((product) => (
+            <div
+              key={product.id}
+              className="relative group overflow-hidden rounded-lg shadow-md"
+            >
+              {/* Product Image */}
+              <div className="relative w-full h-[301px] max-[620px]:h-[240px] max-[430px]:h-[200px]">
+                <img
+                  onClick={() => navigate(`/product/${product.id}`)} // Navigate qo‘shildi
+                  className="w-full h-full bg-no-repeat bg-center bg-cover"
+                  src={`${product.image[0]}`}
+                  alt={product.title}
+                />
+              </div>
 
-            {/* Hover Effect */}
-            {/* <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <button className="bg-white text-black px-4 py-2 rounded-md">
-                Add to Cart
-              </button>
-            </div> */}
-
-              <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <button className="bg-white text-black px-4 py-2 rounded-md">
-                  Add to Cart
+              <div>
+                <button className="absolute top-10 right-1 w-[30px] h-[30px] bg-white rounded-full flex items-center justify-center text-[20px]">
+                  <IoCartOutline />
                 </button>
-                <div>
-                  <button className="absolute top-10 right-1 w-[30px] h-[30px] bg-white rounded-full flex items-center justify-center text-[20px]">
-                    <IoCartOutline />
-                  </button>
-                  <Heart product={product} />
-                </div>
+                <Heart product={product} />
               </div>
 
               {/* Product Details */}
@@ -95,7 +82,5 @@ const Products = ({ products }: ProductsProps) => {
     </div>
   );
 };
-
-
 
 export default memo(Products);
