@@ -49,7 +49,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
       </div>
 
       <div className="flex flex-col md:flex-row items-center gap-4">
-        <div className="flex items-center w-[100px] md:w-[120px] h-[48px] border-2 rounded-xl">
+        <div className="flex items-center w-[100px] md:w-[123px] h-[64px] border-2 rounded-xl">
           <button
             onClick={handleDecreaseQuantity}
             className="px-3 py-2 text-lg"
@@ -64,7 +64,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             +
           </button>
         </div>
-        <button className="w-full md:w-[215px] h-[48px] border border-black rounded-2xl hover:bg-gray-100">
+        <button className="w-full md:w-[215px] h-[48px] md:h-[64px] border border-black rounded-2xl hover:bg-gray-100">
           Add To Cart
         </button>
         <button className="w-full md:w-[215px] h-[48px] md:h-[64px] border border-black rounded-2xl hover:bg-gray-100">

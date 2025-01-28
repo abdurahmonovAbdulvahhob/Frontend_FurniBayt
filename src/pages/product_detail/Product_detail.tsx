@@ -33,7 +33,7 @@ const ProductDetail = () => {
   const product = data?.data?.product;
 
   return (
-    <div className="min-h-[850px] container mx-auto py-6 sm:py-10 pt-10 sm:pt-14">
+    <div className="min-h-[850px] container mx-auto py-6 sm:py-10 pt-10 sm:pt-14 mt-10">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         <ProductImages images={product?.image || []} />
         <ProductInfo product={product} />

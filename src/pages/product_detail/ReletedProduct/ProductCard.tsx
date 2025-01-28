@@ -2,6 +2,14 @@ import { NavLink } from "react-router-dom";
 import { IProduct } from "../../../types";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
+
+   const scrollToTop = () => {
+     window.scrollTo({
+       top: 0,
+       behavior: "smooth",
+     });
+   };
+
   return (
     <div
       key={product.id}
@@ -9,7 +17,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     >
       {/* Product Image */}
       <div className="relative w-full h-[301px] max-[620px]:h-[240px] max-[430px]:h-[200px]">
-        <NavLink to={`/product/${product.id}`}>
+        <NavLink to={`/product/${product.id}`} onClick={scrollToTop}>
           <img
             className="w-full h-full bg-no-repeat bg-center bg-cover"
             src={product.image[0]}
