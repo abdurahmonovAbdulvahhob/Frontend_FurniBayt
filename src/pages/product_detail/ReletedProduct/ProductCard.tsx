@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { IProduct } from "../../../types";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
@@ -8,11 +9,13 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     >
       {/* Product Image */}
       <div className="relative w-full h-[301px] max-[620px]:h-[240px] max-[430px]:h-[200px]">
-        <img
-          className="w-full h-full bg-no-repeat bg-center bg-cover"
-          src={product.image[0]}
-          alt={product.title}
-        />
+        <NavLink to={`/product/${product.id}`}>
+          <img
+            className="w-full h-full bg-no-repeat bg-center bg-cover"
+            src={product.image[0]}
+            alt={product.title}
+          />
+        </NavLink>
       </div>
 
       {/* Product Details */}

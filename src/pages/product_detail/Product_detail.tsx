@@ -20,7 +20,7 @@ const ProductDetail = () => {
 
   if (isError) {
     return (
-      <div className="text-center text-red-500 min-h-[600px] pt-20">
+      <div className="text-center text-red-500 min-h-[600px] pt-30">
         {(error as any)?.data?.message}
       </div>
     );
