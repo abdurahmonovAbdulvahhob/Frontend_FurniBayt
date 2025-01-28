@@ -1,9 +1,9 @@
-import { SuspenseContainer } from "@/config"
-import { lazy } from "react"
-import {useRoutes} from "react-router-dom"
-const Home = lazy(()=> import("@/pages/home/Home"))
-const Shop = lazy(()=> import("@/pages/shop/Shop"))
-const About = lazy(()=> import("@/pages/about/About"))
+import { SuspenseContainer } from "@/config";
+import { lazy } from "react";
+import { useRoutes } from "react-router-dom";
+const Home = lazy(() => import("@/pages/home/Home"));
+const Shop = lazy(() => import("@/pages/shop/Shop"));
+const About = lazy(() => import("@/pages/about/About"));
 const Contact = lazy(() => import("@/pages/contact/Contact"));
 const SignUp = lazy(() => import("@/pages/auth/sign-up/SignUp"));
 const Otp = lazy(() => import("@/pages/auth/otp/Otp"));
@@ -11,8 +11,11 @@ const Profile = lazy(() => import("@/pages/auth/profile/Profile"));
 const Search = lazy(() => import("@/components/search/Search"));
 const Wishlist = lazy(() => import("@/pages/wishlist/Wishlist"));
 const Cart = lazy(() => import("@/pages/cart/Cart"));
-const Layout = lazy(()=> import("@/pages/layout/Layout"))
-const NotFound = lazy(()=> import("@/pages/not-found/NotFound"))
+const Product_detail = lazy(
+  () => import("@/pages/product_detail/Product_detail")
+);
+const Layout = lazy(() => import("@/pages/layout/Layout"));
+const NotFound = lazy(() => import("@/pages/not-found/NotFound"));
 
 const Routers = () => {
   return (
@@ -39,6 +42,14 @@ const Routers = () => {
               element: (
                 <SuspenseContainer>
                   <Shop />
+                </SuspenseContainer>
+              ),
+            },
+            {
+              path: "product/:id",
+              element: (
+                <SuspenseContainer>
+                  <Product_detail />
                 </SuspenseContainer>
               ),
             },
@@ -119,6 +130,6 @@ const Routers = () => {
       ])}
     </>
   );
-}
+};
 
-export default Routers
+export default Routers;

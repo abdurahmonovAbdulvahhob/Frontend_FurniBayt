@@ -10,6 +10,7 @@ export interface IGetProducts {
   total: number;
 }
 export interface IProduct {
+  categroyId?: number;
   id: number;
   title: string;
   stock: number;
@@ -36,4 +37,31 @@ export interface ICustomer {
   password: string;
   confirm_password: string;
   // phone_number: string;
+}
+export interface IGetResponseSingleProduct {
+  data: IGetSingleProduct;
+  message: string;
+  statusCode: number;
+}
+export interface IGetSingleProduct {
+  product: {
+    id: number;
+    image: string[];
+    price: number;
+    title: string;
+    color: string[];
+    additional_info: string;
+    description: string;
+    average_rating: number;
+    sku: string;
+    tags: string[];
+    categoryId?: number;
+    product_category: {
+      id: number;
+      name: string;
+    };
+    product_comments: {
+      comment: string;
+  };
+  };
 }
