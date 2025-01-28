@@ -2,6 +2,7 @@ import {
   IGetResponseProducts,
   IGetResponseSingleProduct,
   IProductQuery,
+  IProduct
 } from "@/types";
 import { mainApi } from "./index";
 
@@ -10,6 +11,13 @@ const extendedApi = mainApi.injectEndpoints({
     getProducts: build.query<IGetResponseProducts, IProductQuery>({
       query: (params) => ({
         url: "products",
+        method: "GET",
+        params,
+      }),
+    }),
+    getProductById: build.query<IProduct, any>({
+      query: (params) => ({
+        url: "product/:id",
         method: "GET",
         params,
       }),
@@ -23,4 +31,5 @@ const extendedApi = mainApi.injectEndpoints({
   }),
 });
 
-export const { useGetProductsQuery, useGetSingleProductQuery } = extendedApi;
+export const { useGetProductsQuery, useGetSingleProductQuery, useGetProductByIdQuery } = extendedApi;
+

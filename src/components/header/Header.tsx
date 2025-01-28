@@ -4,36 +4,36 @@ import { FiSearch } from "react-icons/fi";
 import { LuUser } from "react-icons/lu";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux";
-import { links } from "../../static";
-import logo from "@/assets/logo/logo1-removebg-preview.png";
+import { RootState } from "../../redux"; 
 import useOnlineStatus from "@/hooks/useOnlineStatus";
 import HeaderSearch from "./HeaderSearch";
 import HeaderSkeleton from "../../skleton/HeaderSkeleton/HeaderSkeleton";
+import logo from "@/assets/logo/logo1-removebg-preview.png"; 
+import { links } from "../../static";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const { online, firstEnter } = useOnlineStatus();
-  const token = useSelector((state: RootState) => state.token.access_token);
+  const token = useSelector((state: RootState) => state.token.access_token); 
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
 
+
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false); 
-    }, 500); 
+    const timer = setTimeout(() => setIsLoading(false), 500);
+    return () => clearTimeout(timer);
   }, []);
 
-  if (isLoading) {
-    return <>
-    <HeaderSkeleton />
-    </>
+  const isMobile = window.innerWidth <= 1024; 
+
+  if (isLoading && !isMobile) {
+    return <HeaderSkeleton />;
   }
 
   return (
     <>
       {/* Top Header for Desktop and Mobile */}
-      <header 
+      <header
         className={`
           hidden lg:flex fixed w-full z-50 bg-white shadow-md 
           transition-all duration-300 
@@ -41,18 +41,17 @@ const Header: React.FC = () => {
         `}
       >
         <div className="container mx-auto h-20 flex justify-between items-center font-poppins px-4 lg:px-0">
-        {/* Logo */}
-        <div
-          onClick={() => navigate("/")}
-          className="flex items-center duration-300 cursor-pointer space-x-2"
-        >
-          <img
-            src={logo}
-            alt="Furnishings Logo"
-            className="h-10 w-auto opacity-100" 
-          />
-        </div>
-
+          {/* Logo */}
+          <div
+            onClick={() => navigate("/")}
+            className="flex items-center duration-300 cursor-pointer space-x-2"
+          >
+            <img
+              src={logo}
+              alt="Furnishings Logo"
+              className="h-10 w-auto opacity-100"
+            />
+          </div>
 
           {/* Navigation Links - Desktop */}
           <nav className="flex items-center gap-8">
@@ -91,16 +90,16 @@ const Header: React.FC = () => {
       </header>
 
       {/* Bottom Navigation for Mobile */}
-      <nav 
+      <nav
         className="
           lg:hidden fixed bottom-0 left-0 w-full bg-white 
           shadow-[0_-2px_10px_rgba(0,0,0,0.1)] z-50 
           flex justify-around items-center h-16
         "
       >
-        <NavLink 
-          to="/" 
-          className={({ isActive }) => 
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
             `flex flex-col items-center ${
               isActive ? "text-bg-primary" : "text-gray-600"
             }`
@@ -110,9 +109,9 @@ const Header: React.FC = () => {
           <span className="text-xs mt-1">Home</span>
         </NavLink>
 
-        <NavLink 
-          to="/wishlist" 
-          className={({ isActive }) => 
+        <NavLink
+          to="/wishlist"
+          className={({ isActive }) =>
             `flex flex-col items-center ${
               isActive ? "text-bg-primary" : "text-gray-600"
             }`
@@ -122,17 +121,17 @@ const Header: React.FC = () => {
           <span className="text-xs mt-1">Wishlist</span>
         </NavLink>
 
-        <div 
-          onClick={() => setSearchOpen(true)} 
+        <div
+          onClick={() => setSearchOpen(true)}
           className="flex flex-col items-center text-gray-600 cursor-pointer"
         >
           <FiSearch className="text-2xl" />
           <span className="text-xs mt-1">Search</span>
         </div>
 
-        <NavLink 
-          to="/cart" 
-          className={({ isActive }) => 
+        <NavLink
+          to="/cart"
+          className={({ isActive }) =>
             `flex flex-col items-center ${
               isActive ? "text-bg-primary" : "text-gray-600"
             }`
@@ -142,9 +141,9 @@ const Header: React.FC = () => {
           <span className="text-xs mt-1">Cart</span>
         </NavLink>
 
-        <NavLink 
-          to={token ? "/auth/profile" : "/auth/sign-up"} 
-          className={({ isActive }) => 
+        <NavLink
+          to={token ? "/auth/profile" : "/auth/sign-up"}
+          className={({ isActive }) =>
             `flex flex-col items-center ${
               isActive ? "text-bg-primary" : "text-gray-600"
             }`
@@ -154,6 +153,7 @@ const Header: React.FC = () => {
           <span className="text-xs mt-1">Profile</span>
         </NavLink>
       </nav>
+      
 
       {/* Search Component */}
       <HeaderSearch setSearchOpen={setSearchOpen} searchOpen={searchOpen} />
