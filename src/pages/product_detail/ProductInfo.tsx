@@ -30,7 +30,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
 
       <div className="flex items-center gap-4">
         <span className="font-medium">Color:</span>
-        {product?.color?.map((color, index) => (
+        {product?.color?.map((color:string, index:number) => (
           <div
             key={index}
             className={`w-6 h-6 rounded-full cursor-pointer border-2 ${
