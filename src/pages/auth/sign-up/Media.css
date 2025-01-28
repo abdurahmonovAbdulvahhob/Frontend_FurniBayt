@@ -1,0 +1,46 @@
+/* Mobil uchun stil qo'shish */
+@media (max-width: 640px) {
+  .bg-gray-50 {
+    background-color: #f3f4f6;
+  }
+
+  .bg-white {
+    background-color: #ffffff;
+  }
+
+  .rounded-lg {
+    border-radius: 8px;
+  }
+
+  .p-6 {
+    padding: 16px;
+  }
+
+  .p-2 {
+    padding: 10px;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+
+  .text-sm {
+    font-size: 14px;
+  }
+
+  .text-xl {
+    font-size: 24px;
+  }
+
+  .font-bold {
+    font-weight: 700;
+  }
+
+  .font-medium {
+    font-weight: 500;
+  }
+
+  .text-gray-500 {
+    color: #6b7280;
+  }
+}

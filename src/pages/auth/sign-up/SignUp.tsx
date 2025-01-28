@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { NavLink } from "react-router-dom"; 
 
 const schema = yup
   .object({
@@ -245,6 +246,13 @@ const SignUp = () => {
                 </Link>
               </p>
             </form>
+
+            {/* Back Button */}
+            <NavLink to="/">
+              <button className="mt-4 p-2 bg-gray-300 text-white rounded-lg w-full transform transition duration-300 ease-in-out hover:bg-gray-400 hover:scale-105 hover:shadow-lg">
+                Back
+              </button>
+            </NavLink>
           </div>
         </div>
       </div>
