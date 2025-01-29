@@ -4,6 +4,7 @@ import { IoCartOutline } from "react-icons/io5";
 import Heart from "./Heart";
 import wishlist from "../../assets/images/wishlist-empty1.jpg";
 import { useNavigate } from "react-router-dom";
+import Discount from "./Discount";
 
 interface ProductsProps {
   products: IProduct[];
@@ -35,24 +36,28 @@ const Products = ({ products }: ProductsProps) => {
               className="relative group overflow-hidden rounded-lg shadow-md"
             >
               {/* Product Image */}
-              <div className="relative w-full h-[301px] max-[620px]:h-[240px] max-[430px]:h-[200px]">
+              <div className="relative w-full h-[301px] max-[620px]:h-[240px] max-[430px]:h-[200px] overflow-hidden">
                 <img
-                  onClick={() => navigate(`/product/${product.id}`)} // Navigate qo‘shildi
-                  className="w-full h-full bg-no-repeat bg-center bg-cover"
+                  onClick={() => navigate(`/product/${product.id}`)}
+                  className="w-full h-full bg-no-repeat bg-center bg-cover duration-300 md:scale-100 cursor-pointer 
+               group-hover:opacity-100 group-hover:scale-110"
                   src={`${product.image[0]}`}
                   alt={product.title}
                 />
               </div>
 
               <div>
-                <button className="absolute top-10 right-1 w-[30px] h-[30px] bg-white rounded-full flex items-center justify-center text-[20px]">
+                <Heart product={product} />
+                <button className="hover:bg-slate-200 shadow-md dark:text-black absolute top-12 md:top-12 right-2 md:right-[-40px] delay-100 duration-300 group-hover:right-2 w-[35px] h-[35px] bg-white rounded-full flex items-center justify-center text-[20px]">
                   <IoCartOutline />
                 </button>
-                <Heart product={product} />
+                {!!product.discount && (
+                  <Discount percent={Number(product.discount)} />
+                )}
               </div>
 
               {/* Product Details */}
-              <div className="py-4 px-4 bg-[#F4F5F7] transition-colors duration-300">
+              <div className=" container py-4 px-4 bg-white transition-colors duration-300">
                 <h2
                   title={product.title}
                   className="line-clamp-1 text-[24px] font-semibold leading-8 max-[620px]:text-lg"
@@ -65,9 +70,18 @@ const Products = ({ products }: ProductsProps) => {
                 >
                   {product.description}
                 </p>
-                <strong className="text-[#3A3A3A] text-[20px] leading-8 font-semibold max-[620px]:text-[15px]">
-                  {product.price.toLocaleString()} USD
+                <strong className="text-[#3A3A3A] dark:text-slate-200 text-[20px] leading-8 font-semibold max-[620px]:text-[15px]">
+                  {(
+                    (product.price * (100 - (product.discount || 0))) /
+                    100
+                  ).toLocaleString()}{" "}
+                  USD
                 </strong>
+                {!!product.discount && (
+                  <s className="ml-2 text-gray-400">
+                    {product.price.toLocaleString()} USD
+                  </s>
+                )}
               </div>
             </div>
           ))

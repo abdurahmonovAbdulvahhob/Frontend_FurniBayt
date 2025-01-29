@@ -11,17 +11,29 @@ const extendedApi = mainApi.injectEndpoints({
           method: "POST",
           body,
         }),
-        invalidatesTags: ["Wishlist"],
+        invalidatesTags: ["Wishlist","Products"],
       }
     ),
+    setWishlist: build.mutation<any, any>({
+      query: (args) => ({
+        url: `like/wishlist/${args.customerId}`,
+        method: "POST",
+        body: args.wishlist,
+      }),
+      invalidatesTags: ["Wishlist"],
+    }),
     getWishlist: build.query<any, string>({
       query: (id) => ({
         url: `wishlist/client/${id}`,
         method: "GET",
       }),
-      providesTags: ["Wishlist"],
+      providesTags: ["Wishlist","Products"],
     }),
   }),
 });
 
-export const { useToggleWishlitMutation, useGetWishlistQuery } = extendedApi;
+export const {
+  useSetWishlistMutation,
+  useToggleWishlitMutation,
+  useGetWishlistQuery,
+} = extendedApi;

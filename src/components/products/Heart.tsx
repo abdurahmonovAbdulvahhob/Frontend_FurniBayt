@@ -28,12 +28,18 @@ const Heart = ({product}:{product: IProduct}) => {
     <div>
       <button
         onClick={handleLike}
-        className="absolute top-1 right-1 w-[30px] h-[30px] bg-white rounded-full flex items-center justify-center text-[20px] transition-all duration-300 hover:bg-gray-200"
+        className="hover:bg-slate-200 shadow-md dark:text-black absolute top-1 md:top-2 right-2 md:right-[-40px] duration-300 group-hover:right-2 w-[35px] h-[35px] bg-white rounded-full flex items-center justify-center text-[20px]"
       >
-        {wishlist?.some((item) => item.id === product.id) ? (
-          <IoMdHeart className="text-xl text-primary" />
+        {token ? (
+          product?.is_liked ? (
+            <IoMdHeart className="text-red-500" />
+          ) : (
+            <IoMdHeartEmpty />
+          )
+        ) : wishlist?.some((item) => item.id === product.id) ? (
+          <IoMdHeart className="text-red-500" />
         ) : (
-          <IoMdHeartEmpty className="text-xl text-primary" />
+          <IoMdHeartEmpty />
         )}
       </button>
     </div>

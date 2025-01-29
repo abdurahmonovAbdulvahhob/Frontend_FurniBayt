@@ -69,7 +69,7 @@ const HeaderSearch: FC<{
           searchOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         style={{
-          zIndex: 9999,  
+          zIndex: 9999,
         }}
       >
         {/* Logo va nom */}
@@ -101,7 +101,10 @@ const HeaderSearch: FC<{
         </div>
 
         {/* Natijalar yoki tavsiyalar */}
-        {!isFetching && value.trim() && isSuccess && data?.data?.products?.length > 0 ? (
+        {!isFetching &&
+        value.trim() &&
+        isSuccess &&
+        data?.data?.products?.length > 0 ? (
           <div className="max-w-2xl w-full flex flex-col gap-1 overflow-y-auto max-h-96">
             {data.data.products.map((product: IProduct) => (
               <Link
@@ -130,6 +133,8 @@ const HeaderSearch: FC<{
               "Coffee Table",
               "Wardrobe",
               "Armchair",
+              "living room",
+            
             ].map((term) => (
               <span
                 key={term}
