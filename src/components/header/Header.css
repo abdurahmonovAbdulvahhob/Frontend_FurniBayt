@@ -1,0 +1,14 @@
+#header .active {
+  color: rgb(246, 173, 77);
+}
+
+.header-animete {
+  margin-top: 24px;
+  animation: headerAnimte 0.25s ease 1s forwards;
+}
+
+@keyframes headerAnimte {
+  to {
+    margin-top: 0;
+  }
+}/*# sourceMappingURL=Header.css.map */
