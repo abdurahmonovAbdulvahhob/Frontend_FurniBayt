@@ -1,12 +1,12 @@
+import logo from "@/assets/logo/logo1-removebg-preview.png"; // To'g'ri manba
 import React, { FC, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import logo from "@/assets/logo/logo1-removebg-preview.png"; // To'g'ri manba
-import { FiSearch } from "react-icons/fi";
+// import { FiSearch } from "react-icons/fi";
+import useDebounce from "@/hooks/useDebounce";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useGetProductsQuery } from "@/redux/api/product-api";
 import { IProduct } from "@/types";
-import useDebounce from "@/hooks/useDebounce";
 import { CircularProgress } from "@mui/material";
-import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 const HeaderSearch: FC<{
   searchOpen: boolean;
@@ -38,7 +38,7 @@ const HeaderSearch: FC<{
   return (
     <div
       ref={ref}
-      className={`absolute top-0 bg-white p-6 flex flex-col items-center gap-4 shadow-lg min-h-[250px] rounded-b-3xl w-full transition-all duration-500 ${
+      className={`absolute top-0 z-50 bg-white p-6 flex flex-col items-center gap-4 shadow-lg min-h-[250px] rounded-b-3xl w-full transition-all duration-500 ${
         searchOpen ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
     >
@@ -47,7 +47,7 @@ const HeaderSearch: FC<{
         className="absolute left-5 top-5 flex items-center gap-2 font-poppins cursor-pointer"
         onClick={handleNavigateHome}
       >
-        {/* <img  alt="logo" className="h-10 w-auto" /> */}
+        <img src={logo} alt="logo" className="h-10 w-auto" />
       </div>
 
       {/* Qidiruv inputi */}
@@ -59,12 +59,12 @@ const HeaderSearch: FC<{
           onChange={(e) => setValue(e.target.value)}
           className="w-full p-3 border rounded-l-lg outline-none text-gray-700 text-sm"
         />
-        <button className="p-3 border border-x-0 hover:bg-amber-600 hover:border-amber-600 hover:text-white transition duration-300">
+        {/* <button className="p-3 border border-x-0 hover:bg-yellow-600 hover:border-yellow-600 hover:text-white transition duration-300">
           <FiSearch className="h-5 w-5" />
-        </button>
+        </button> */}
         <button
           onClick={handleClose}
-          className="p-3 text-[14.5px] bg-red-500 text-white rounded-r-lg hover:bg-red-600 transition duration-300"
+          className="p-3 text-[14.5px] bg-yellow-600 text-white rounded-r-lg hover:bg-yellow-700 transition duration-300"
         >
           Cancel
         </button>

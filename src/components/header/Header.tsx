@@ -10,6 +10,7 @@ import logo from "@/assets/logo/logo1-removebg-preview.png";
 import useOnlineStatus from "@/hooks/useOnlineStatus";
 import HeaderSearch from "./HeaderSearch";
 import HeaderSkeleton from "../../skleton/HeaderSkeleton/HeaderSkeleton";
+// import Search from "../search/Search";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -33,29 +34,28 @@ const Header: React.FC = () => {
   return (
     <>
       {/* Top Header for Desktop and Mobile */}
-      <header 
+      <header
         className={`
-          hidden lg:flex fixed w-full z-50 bg-white shadow-md 
-          transition-all duration-300 
+          lg:flex sticky z-50 bg-white shadow-md 
+          transition-all duration-300
           ${!online && firstEnter ? "top-6" : "top-0"}
         `}
       >
         <div className="container mx-auto h-20 flex justify-between items-center font-poppins px-4 lg:px-0">
-        {/* Logo */}
-        <div
-          onClick={() => navigate("/")}
-          className="flex items-center duration-300 cursor-pointer space-x-2"
-        >
-          <img
-            src={logo}
-            alt="Furnishings Logo"
-            className="h-10 w-auto opacity-100" 
-          />
-        </div>
-
+          {/* Logo */}
+          <div
+            onClick={() => navigate("/")}
+            className="flex items-center duration-300 cursor-pointer space-x-2"
+          >
+            <img
+              src={logo}
+              alt="Furnibayt Logo"
+              className="h-10 w-auto opacity-100"
+            />
+          </div>
 
           {/* Navigation Links - Desktop */}
-          <nav className="flex items-center gap-8">
+          <nav className="flex items-center gap-8 max-[986px]:hidden">
             {links.map((link) => (
               <NavLink
                 key={link.href}
@@ -72,7 +72,7 @@ const Header: React.FC = () => {
           </nav>
 
           {/* Icons */}
-          <div className="flex items-center gap-6 text-xl">
+          <div className="flex items-center gap-6 text-xl max-[986px]:hidden">
             <NavLink to={token ? "/auth/profile" : "/auth/sign-up"}>
               <LuUser className="h-6 w-6 hover:text-bg-primary duration-100" />
             </NavLink>
@@ -91,16 +91,16 @@ const Header: React.FC = () => {
       </header>
 
       {/* Bottom Navigation for Mobile */}
-      <nav 
+      <nav
         className="
           lg:hidden fixed bottom-0 left-0 w-full bg-white 
           shadow-[0_-2px_10px_rgba(0,0,0,0.1)] z-50 
           flex justify-around items-center h-16
         "
       >
-        <NavLink 
-          to="/" 
-          className={({ isActive }) => 
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
             `flex flex-col items-center ${
               isActive ? "text-bg-primary" : "text-gray-600"
             }`
@@ -110,9 +110,9 @@ const Header: React.FC = () => {
           <span className="text-xs mt-1">Home</span>
         </NavLink>
 
-        <NavLink 
-          to="/wishlist" 
-          className={({ isActive }) => 
+        <NavLink
+          to="/wishlist"
+          className={({ isActive }) =>
             `flex flex-col items-center ${
               isActive ? "text-bg-primary" : "text-gray-600"
             }`
@@ -122,17 +122,17 @@ const Header: React.FC = () => {
           <span className="text-xs mt-1">Wishlist</span>
         </NavLink>
 
-        <div 
-          onClick={() => setSearchOpen(true)} 
+        <div
+          onClick={() => setSearchOpen(true)}
           className="flex flex-col items-center text-gray-600 cursor-pointer"
         >
           <FiSearch className="text-2xl" />
           <span className="text-xs mt-1">Search</span>
         </div>
 
-        <NavLink 
-          to="/cart" 
-          className={({ isActive }) => 
+        <NavLink
+          to="/cart"
+          className={({ isActive }) =>
             `flex flex-col items-center ${
               isActive ? "text-bg-primary" : "text-gray-600"
             }`
@@ -142,9 +142,9 @@ const Header: React.FC = () => {
           <span className="text-xs mt-1">Cart</span>
         </NavLink>
 
-        <NavLink 
-          to={token ? "/auth/profile" : "/auth/sign-up"} 
-          className={({ isActive }) => 
+        <NavLink
+          to={token ? "/auth/profile" : "/auth/sign-up"}
+          className={({ isActive }) =>
             `flex flex-col items-center ${
               isActive ? "text-bg-primary" : "text-gray-600"
             }`
@@ -156,6 +156,7 @@ const Header: React.FC = () => {
       </nav>
 
       {/* Search Component */}
+      {/* <Search setSearchOpen={setSearchOpen} searchOpen={searchOpen} /> */}
       <HeaderSearch setSearchOpen={setSearchOpen} searchOpen={searchOpen} />
 
       {/* Internet Status Alert */}

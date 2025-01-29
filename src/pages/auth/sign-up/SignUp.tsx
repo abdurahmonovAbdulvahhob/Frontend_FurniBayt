@@ -8,8 +8,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux";
+import { FaArrowLeft } from "react-icons/fa";
 
 const schema = yup
   .object({
@@ -30,19 +33,19 @@ const schema = yup
   })
   .required();
 
-
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const token = useSelector((state: RootState) => state.token.access_token);
+  if (token) {
+    return <Navigate replace to={"/auth/profile"} />;
+  }
   const [createCustomer, { isLoading }] = useCreateCustomerMutation();
   const [createOtp, { isLoading: otpLoading }] = useCreateOtpMutation();
-  console.log(isLoading);
-
   const {
     register,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -51,9 +54,9 @@ const SignUp = () => {
       .unwrap()
       .then((res) => {
         toast.success("Welcome", { position: "bottom-right" });
-         if (!res.verification_key) {
-           throw new Error("Verification key is missing");
-         }
+        if (!res.verification_key) {
+          throw new Error("Verification key is missing");
+        }
         dispatch(
           saveEmail({
             email: data.email,
@@ -81,6 +84,9 @@ const SignUp = () => {
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
+      <Link to={"/"} className="absolute top-6 left-6 text-xl">
+        <FaArrowLeft />
+      </Link>
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -238,7 +244,7 @@ const SignUp = () => {
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
                 <Link
-                  to="/"
+                  to={ "/auth/sign-up"}
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Login here

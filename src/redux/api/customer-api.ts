@@ -1,5 +1,5 @@
-import { ICustomer } from '@/types';
-import { mainApi } from './index'
+import { ICustomer, ICustomerDataResponse, OtpResponse } from "@/types";
+import { mainApi } from "./index";
 
 const extendedApi = mainApi.injectEndpoints({
   endpoints: (build) => ({
@@ -16,7 +16,7 @@ const extendedApi = mainApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    createOtp: build.mutation<any, { email: string }>({
+    createOtp: build.mutation<OtpResponse, { email: string }>({
       query: (body) => ({
         url: "auth/newotp",
         method: "POST",
@@ -24,16 +24,36 @@ const extendedApi = mainApi.injectEndpoints({
       }),
     }),
     verifyOtp: build.mutation<
-      any,
+      OtpResponse,
       { email: string; otp: string; verification_key: string }
     >({
       query: (body) => ({
-        url: "auth/verifyotp",
+        url: "otp/verify-otp",
         method: "POST",
         body,
+      }),
+    }),
+    signIn: build.mutation<any, { email: string; password: string }>({
+      query: (body) => ({
+        url: "auth/signin-customer",
+        method: "POST",
+        body,
+      }),
+    }),
+    getCustomerById: build.query<ICustomerDataResponse, { id: number }>({
+      query: ({ id }) => ({
+        url: `customer/${id}`,
+        method: "GET",
       }),
     }),
   }),
 });
 
-export const { useCreateCustomerMutation, useCreateOtpMutation, useVerifyOtpMutation } = extendedApi;
+export const {
+  useCreateCustomerMutation,
+  useCreateOtpMutation,
+  useVerifyOtpMutation,
+  useSignInMutation,
+  useGetCustomerByIdQuery,
+  useCheckTokenQuery,
+} = extendedApi;

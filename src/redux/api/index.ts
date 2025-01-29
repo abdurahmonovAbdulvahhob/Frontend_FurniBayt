@@ -28,9 +28,11 @@ const fetchBaseQueryWithRetry = retry(baseQuery, { maxRetries: 0 });
 export const mainApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQueryWithRetry,
-  tagTypes: ["PRODUCT", "CUSTOMER"],
+  tagTypes: ["Product", "Customer", "Category", "Wishlist"],
   endpoints: () => ({}),
 });
+
+
 
 // import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 

@@ -5,11 +5,11 @@ const Home = lazy(()=> import("@/pages/home/Home"))
 const Shop = lazy(()=> import("@/pages/shop/Shop"))
 const About = lazy(()=> import("@/pages/about/About"))
 const Contact = lazy(() => import("@/pages/contact/Contact"));
+const Auth = lazy(() => import("@/pages/auth/Auth"));
 const SignUp = lazy(() => import("@/pages/auth/sign-up/SignUp"));
-import Auth from "@/pages/auth/Auth";
+const SignIn = lazy(() => import("@/pages/auth/sign-in/SignIn"));
 const Otp = lazy(() => import("@/pages/auth/otp/Otp"));
 const Profile = lazy(() => import("@/pages/auth/profile/Profile"));
-const Search = lazy(() => import("@/components/search/Search"));
 const Wishlist = lazy(() => import("@/pages/wishlist/Wishlist"));
 const Cart = lazy(() => import("@/pages/cart/Cart"));
 const Layout = lazy(()=> import("@/pages/layout/Layout"))
@@ -78,10 +78,10 @@ const Routers = () => {
               ],
             },
             {
-              path: "/search",
+              path: "/auth/otp",
               element: (
                 <SuspenseContainer>
-                  <Search />
+                  <Otp />
                 </SuspenseContainer>
               ),
             },
@@ -120,10 +120,10 @@ const Routers = () => {
           ),
         },
         {
-          path: "/auth/otp",
+          path: "/auth/sign-in",
           element: (
             <SuspenseContainer>
-              <Otp />
+              <SignIn />
             </SuspenseContainer>
           ),
         },

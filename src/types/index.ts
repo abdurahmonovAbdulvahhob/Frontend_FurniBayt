@@ -9,6 +9,10 @@ export interface IGetProducts {
   products: IProduct[];
   total: number;
 }
+export interface IReview {
+  id: number;
+  comment: string;
+}
 export interface IProduct {
   categoryId?: number;
   id: number;
@@ -21,6 +25,11 @@ export interface IProduct {
   sku: string;
   colors: string[];
   tags: string[];
+  is_liked?: boolean;
+  discount?: {
+    percent?: number;
+  };
+  reviews?: IReview[];
 }
 export interface IProductQuery {
   filter?: string;
@@ -29,6 +38,7 @@ export interface IProductQuery {
   limit?: number;
   sortBy?: string;
   priceOrder?: "asc" | "desc";
+  categoryId?: number;
 }
 export interface ICustomer {
   first_name: string;
