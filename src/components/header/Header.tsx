@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { AiOutlineHeart, AiOutlineShoppingCart, AiOutlineHome } from "react-icons/ai";
+import {
+  AiOutlineHeart,
+  AiOutlineShoppingCart,
+  AiOutlineHome,
+} from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
 import { LuUser } from "react-icons/lu";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux"; 
+import { RootState } from "../../redux";
 import useOnlineStatus from "@/hooks/useOnlineStatus";
 import HeaderSearch from "./HeaderSearch";
 import HeaderSkeleton from "../../skleton/HeaderSkeleton/HeaderSkeleton";
-import logo from "@/assets/logo/logo1-removebg-preview.png"; 
+import logo from "@/assets/logo/logo1-removebg-preview.png";
 import { links } from "../../static";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const { online, firstEnter } = useOnlineStatus();
-  const token = useSelector((state: RootState) => state.token.access_token); 
+  const token = useSelector((state: RootState) => state.token.access_token);
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,7 +27,7 @@ const Header: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const isMobile = window.innerWidth <= 1024; 
+  const isMobile = window.innerWidth <= 1024;
 
   if (isLoading && !isMobile) {
     return <HeaderSkeleton />;
@@ -160,7 +164,6 @@ const Header: React.FC = () => {
           <span className="text-xs mt-1">Profile</span>
         </NavLink>
       </nav>
-      
 
       {/* Search Component */}
       <HeaderSearch setSearchOpen={setSearchOpen} searchOpen={searchOpen} />
