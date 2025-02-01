@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { AiOutlineHeart, AiOutlineShoppingCart, AiOutlineHome } from "react-icons/ai";
+import {
+  AiOutlineHeart,
+  AiOutlineShoppingCart,
+  AiOutlineHome,
+} from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
 import { LuUser } from "react-icons/lu";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux";
-import { links } from "../../static";
-import logo from "@/assets/logo/logo1-removebg-preview.png";
+import { RootState } from "../../redux";
 import useOnlineStatus from "@/hooks/useOnlineStatus";
 import HeaderSearch from "./HeaderSearch";
 import HeaderSkeleton from "../../skleton/HeaderSkeleton/HeaderSkeleton";
-// import Search from "../search/Search";
+import logo from "@/assets/logo/logo1-removebg-preview.png";
+import { links } from "../../static";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -20,15 +23,14 @@ const Header: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false); 
-    }, 500); 
+    const timer = setTimeout(() => setIsLoading(false), 50);
+    return () => clearTimeout(timer);
   }, []);
 
-  if (isLoading) {
-    return <>
-    <HeaderSkeleton />
-    </>
+  const isMobile = window.innerWidth <= 1024;
+
+  if (isLoading && !isMobile) {
+    return <HeaderSkeleton />;
   }
 
   return (
@@ -36,10 +38,11 @@ const Header: React.FC = () => {
       {/* Top Header for Desktop and Mobile */}
       <header
         className={`
-          lg:flex sticky z-50 bg-white shadow-md 
-          transition-all duration-300
+          hidden lg:flex fixed w-full z-50 bg-white shadow-md 
+          transition-all duration-300 
           ${!online && firstEnter ? "top-6" : "top-0"}
         `}
+        style={{ height: "80px" }} // header balandligini aniq ko'rsatish
       >
         <div className="container mx-auto h-20 flex justify-between items-center font-poppins px-4 lg:px-0">
           {/* Logo */}
@@ -49,13 +52,13 @@ const Header: React.FC = () => {
           >
             <img
               src={logo}
-              alt="Furnibayt Logo"
+              alt="Furnishings Logo"
               className="h-10 w-auto opacity-100"
             />
           </div>
 
           {/* Navigation Links - Desktop */}
-          <nav className="flex items-center gap-8 max-[986px]:hidden">
+          <nav className="flex items-center gap-8">
             {links.map((link) => (
               <NavLink
                 key={link.href}
@@ -72,7 +75,7 @@ const Header: React.FC = () => {
           </nav>
 
           {/* Icons */}
-          <div className="flex items-center gap-6 text-xl max-[986px]:hidden">
+          <div className="flex items-center gap-6 text-xl">
             <NavLink to={token ? "/auth/profile" : "/auth/sign-up"}>
               <LuUser className="h-6 w-6 hover:text-bg-primary duration-100" />
             </NavLink>
@@ -89,6 +92,13 @@ const Header: React.FC = () => {
           </div>
         </div>
       </header>
+
+      {/* Sahifa kontentiga padding qo'shish */}
+      <div className="pt-20 lg:pt-[80px]">
+        {/* 80px bu headerning balandligi */}
+
+        {/* Sahifa kontentini shu yerda joylashtirasiz */}
+      </div>
 
       {/* Bottom Navigation for Mobile */}
       <nav
@@ -156,7 +166,6 @@ const Header: React.FC = () => {
       </nav>
 
       {/* Search Component */}
-      {/* <Search setSearchOpen={setSearchOpen} searchOpen={searchOpen} /> */}
       <HeaderSearch setSearchOpen={setSearchOpen} searchOpen={searchOpen} />
 
       {/* Internet Status Alert */}

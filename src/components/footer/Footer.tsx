@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false); 
-    }, 500); 
+    }, 50); 
   }, []);
 
   if (isLoading) {

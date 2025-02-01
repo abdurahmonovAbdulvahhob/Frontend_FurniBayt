@@ -2,13 +2,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import { mainApi } from "./api";
 import tokenSlice from "./features/token-slice";
 import otpSlice from "./features/otp-slice";
-import wishlist from "./features/wishlist-slice";
+import  wishlistSlice  from "./features/wishlist-slice";
+import  customerSlice  from "./features/customer-slice";
 
 export const store = configureStore({
   reducer: {
     otp: otpSlice,
     token: tokenSlice,
-    wishlist,
+    customer: customerSlice,
+    wishlist: wishlistSlice,
     [mainApi.reducerPath]: mainApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

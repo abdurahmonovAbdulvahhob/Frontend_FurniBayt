@@ -4,7 +4,7 @@ const extendedApi = mainApi.injectEndpoints({
   endpoints: (build) => ({
     getCategories: build.query({
       query: (params) => ({
-        url: "category",
+        url: "product-category/get",
         method: "GET",
         params,
       }),
@@ -12,12 +12,20 @@ const extendedApi = mainApi.injectEndpoints({
     }),
     getSingleCategory: build.query({
       query: (id) => ({
-        url: `category/${id}`,
+        url: `product-category/get/${id}`,
         method: "GET",
       }),
       providesTags: ["Category"],
     }),
+    getProductsByCategory: build.query({
+      query: (categoryId) => ({
+        url: `products`,
+        method: "GET",
+        params: { categoryId },
+      }),
+      providesTags: ["Products"],
+    })
   }),
 });
 
-export const { useGetCategoriesQuery, useGetSingleCategoryQuery } = extendedApi;
+export const { useGetCategoriesQuery, useGetSingleCategoryQuery, useGetProductsByCategoryQuery } = extendedApi;
