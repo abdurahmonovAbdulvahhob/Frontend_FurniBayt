@@ -25,7 +25,7 @@ export const wishlistSlice = createSlice({
         saveStorage("wishlist", state.value)
     },
   },
-});
+}); 
 
 export const { toggleLike } = wishlistSlice.actions;
 export default wishlistSlice.reducer;

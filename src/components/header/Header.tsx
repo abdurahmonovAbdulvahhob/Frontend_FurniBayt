@@ -14,6 +14,7 @@ import HeaderSearch from "./HeaderSearch";
 import HeaderSkeleton from "../../skleton/HeaderSkeleton/HeaderSkeleton";
 import logo from "@/assets/logo/logo1-removebg-preview.png";
 import { links } from "../../static";
+import { useCheckTokenQuery } from "../../redux/api/customer-api";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -21,6 +22,10 @@ const Header: React.FC = () => {
   const token = useSelector((state: RootState) => state.token.access_token);
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
+  const { data, isSuccess } = useCheckTokenQuery(null, {
+      skip: Boolean(!token),
+    });
+
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 50);
@@ -94,9 +99,9 @@ const Header: React.FC = () => {
       </header>
 
       {/* Sahifa kontentiga padding qo'shish */}
-      <div className="pt-20 lg:pt-[80px]"> 
+      <div className="pt-20 lg:pt-[80px]">
         {/* 80px bu headerning balandligi */}
-        
+
         {/* Sahifa kontentini shu yerda joylashtirasiz */}
       </div>
 
@@ -152,16 +157,14 @@ const Header: React.FC = () => {
           <span className="text-xs mt-1">Cart</span>
         </NavLink>
 
-        <NavLink
-          to={token ? "/auth/profile" : "/auth/sign-up"}
-          className={({ isActive }) =>
-            `flex flex-col items-center ${
-              isActive ? "text-bg-primary" : "text-gray-600"
-            }`
-          }
-        >
-          <LuUser className="text-2xl" />
-          <span className="text-xs mt-1">Profile</span>
+        <NavLink to={token ? "/auth/profile" : "/auth/sign-in"}>
+          {isSuccess ? (
+            <div className="w-8 h-8 bg-bg-primary rounded-full flex items-center justify-center text-white uppercase">
+              {data?.customer?.first_name?.trim()?.slice(0, 1)}
+            </div>
+          ) : (
+            <LuUser className="h-6 w-6 hover:text-bg-primary duration-200 max-[986px]:hidden" />
+          )}
         </NavLink>
       </nav>
 
