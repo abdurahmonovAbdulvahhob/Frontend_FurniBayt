@@ -8,6 +8,7 @@ import Discount from "./Discount";
 
 interface ProductsProps {
   products: IProduct[];
+  title?: string; 
 }
 
 const Products = ({ products }: ProductsProps) => {
