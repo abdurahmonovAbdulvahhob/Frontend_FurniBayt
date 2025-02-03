@@ -12,7 +12,7 @@ export interface IGetProducts {
 export interface IProduct {
   categroyId?: number;
   id: number;
-  title: string;
+  title?: string;
   stock: number;
   image: string[];
   description: string;
@@ -23,6 +23,7 @@ export interface IProduct {
   tags: string[];
   is_liked?: boolean;
   discount?: number;
+  discount_price: number;
 }
 export interface IProductQuery {
   filter?: string;

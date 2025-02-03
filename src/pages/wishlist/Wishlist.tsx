@@ -9,19 +9,23 @@ const Wishlist = () => {
   // const id = useSelector((state: RootState) => state.customer.value.id);
   const wishlist = useSelector((state: RootState) => state.wishlist.value);
   const token = useSelector((state: RootState) => state.token.access_token);
-  const {data: tokenData} = useCheckTokenQuery(null, {skip: Boolean(!token)});
-  const { data } = useGetWishlistQuery(Number(tokenData?.customer?.id), {skip: Boolean(!tokenData)});
+  const { data: tokenData } = useCheckTokenQuery(null, {
+    skip: Boolean(!token),
+  });
+  const { data } = useGetWishlistQuery(tokenData?.customer?.id?.toString(), {
+    skip: !tokenData,
+  });
 
   // const { data } = useGetWishlistQuery(String(id));
 
   // console.log({ data, wishlist });
-useEffect(() => {
-  window.scrollTo(0, 0);
-}, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div>
       <Products
-        data={token ? data?.data?.products : wishlist}
+        products={token ? data?.data?.products : wishlist}
         title={
           data?.data?.products?.length > 0 || wishlist?.length > 0
             ? "Yours like products"
