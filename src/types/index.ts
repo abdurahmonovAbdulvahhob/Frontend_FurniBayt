@@ -35,7 +35,6 @@ export interface IProductQuery {
   sortBy?: string;
   priceOrder?: "asc" | "desc";
   categoryId?: number;
-
 }
 export interface ICustomer {
   first_name: string;
@@ -51,6 +50,7 @@ export interface IGetResponseSingleProduct {
   statusCode: number;
   categoryId?: number; // Bu yerga categoryId qo'shilgan
 }
+
 export interface IGetSingleProduct {
   product: {
     id: number;
@@ -70,9 +70,8 @@ export interface IGetSingleProduct {
     };
     product_comments: {
       comment: string;
+    };
   };
-  };
-  
 }
 
 export interface ICustomerDataResponse {
