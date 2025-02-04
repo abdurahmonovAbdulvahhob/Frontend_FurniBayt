@@ -43,6 +43,7 @@ export interface IGetResponseSingleProduct {
   message: string;
   statusCode: number;
 }
+
 export interface IGetSingleProduct {
   product: {
     id: number;
@@ -64,4 +65,9 @@ export interface IGetSingleProduct {
       comment: string;
   };
   };
+
+
 }
+
+
+
