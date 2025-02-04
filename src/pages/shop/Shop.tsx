@@ -160,7 +160,7 @@ const Shop = () => {
                 width: "60px",
               },
               "@media (max-width: 600px)": {
-                "& .MuiPaginationItem-root": {
+                "& .MuiPaginationItem-root": {  
                   fontSize: "15px",
                   height: "45px",
                   width: "45px",
