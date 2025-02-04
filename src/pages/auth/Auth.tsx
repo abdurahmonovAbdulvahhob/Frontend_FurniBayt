@@ -1,9 +1,10 @@
-import React from 'react'
+import { RootState } from "@/redux";
+import { useSelector } from "react-redux";
+import { Navigate, Outlet } from "react-router-dom";
 
 const Auth = () => {
-  return (
-    <div>Auth</div>
-  )
-}
+  const token = useSelector((state: RootState) => state.token.access_token);
+  return token ? <Outlet /> : <Navigate replace to={"/"} />;
+};
 
-export default React.memo(Auth);
+export default Auth;

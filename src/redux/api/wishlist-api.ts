@@ -1,19 +1,25 @@
 // import { IGetProducts, IProduct, IProductQuery } from "@/types";
 import { mainApi } from "./index";
 
-
 const extendedApi = mainApi.injectEndpoints({
   endpoints: (build) => ({
-    toggleWishlit: build.mutation<any, { productId: number; clientId: number }>(
+    toggleWishlit: build.mutation<any, { productId: number; customerId: number }>(
       {
         query: (body) => ({
-          url: "wishlist/create",
+          url: "wishlist",
           method: "POST",
           body,
         }),
-        invalidatesTags: ["Wishlist","Products"],
+        invalidatesTags: ["Wishlist","Product"],
       }
     ),
+    getWishlist: build.query<any, string>({
+      query: (id) => ({
+        url: `wishlist/client/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Wishlist"],
+    }),
     setWishlist: build.mutation<any, any>({
       query: (args) => ({
         url: `like/wishlist/${args.customerId}`,
@@ -22,18 +28,11 @@ const extendedApi = mainApi.injectEndpoints({
       }),
       invalidatesTags: ["Wishlist"],
     }),
-    getWishlist: build.query<any, string>({
-      query: (id) => ({
-        url: `wishlist/client/${id}`,
-        method: "GET",
-      }),
-      providesTags: ["Wishlist","Products"],
-    }),
   }),
 });
 
 export const {
-  useSetWishlistMutation,
   useToggleWishlitMutation,
+  useSetWishlistMutation,
   useGetWishlistQuery,
 } = extendedApi;
