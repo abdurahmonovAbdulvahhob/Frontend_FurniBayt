@@ -11,8 +11,9 @@ export interface IGetProducts {
 }
 export interface IProduct {
   categroyId?: number;
+  data?: any;
   id: number;
-  title: string;
+  title?: string;
   stock: number;
   image: string[];
   description: string;
@@ -21,6 +22,10 @@ export interface IProduct {
   sku: string;
   colors: string[];
   tags: string[];
+  is_liked?: boolean;
+  discount?: number;
+  discount_price: number;
+  reviews: IReview[];
 }
 export interface IProductQuery {
   filter?: string;
@@ -29,6 +34,7 @@ export interface IProductQuery {
   limit?: number;
   sortBy?: string;
   priceOrder?: "asc" | "desc";
+  categoryId?: number;
 }
 export interface ICustomer {
   first_name: string;
@@ -42,6 +48,7 @@ export interface IGetResponseSingleProduct {
   data: IGetSingleProduct;
   message: string;
   statusCode: number;
+  categoryId?: number; // Bu yerga categoryId qo'shilgan
 }
 
 export interface IGetSingleProduct {
@@ -63,11 +70,24 @@ export interface IGetSingleProduct {
     };
     product_comments: {
       comment: string;
+    };
   };
-  };
-
-
 }
 
-
-
+export interface ICustomerDataResponse {
+  statusCode: number;
+  message: string;
+  data: {
+    customer: ICustomer;
+  };
+}
+export interface OtpResponse {
+  id?: number;
+  access_token: string;
+  statusCode: number;
+  message: string;
+}
+export interface IReview {
+  id: number;
+  comment: string;
+}

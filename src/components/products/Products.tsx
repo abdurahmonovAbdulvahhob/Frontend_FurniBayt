@@ -1,12 +1,14 @@
 import { memo } from "react";
 import { IProduct } from "../../types";
-import { IoCartOutline } from "react-icons/io5";
 import Heart from "./Heart";
 import wishlist from "../../assets/images/wishlist-empty1.jpg";
 import { useNavigate } from "react-router-dom";
+import Discount from "./Discount";
+import CartButton from "./CartButton";
 
 interface ProductsProps {
   products: IProduct[];
+  title?: string; 
 }
 
 const Products = ({ products }: ProductsProps) => {
@@ -15,62 +17,74 @@ const Products = ({ products }: ProductsProps) => {
   return (
     <div className="container my-14 max-[620px]:my-4">
       <div className="text-center">
-        {products && products.length > 0 ? (
+        {products?.length > 0 ? (
           <h2 className="font-poppins-bold text-[40px] mb-8 text-center max-[620px]:text-2xl">
             Our Products
           </h2>
         ) : (
           <img
-            src={wishlist} // Bu erda kerakli rasm manzilini qo'ying
+            src={wishlist}
             alt="Favorite Products"
-            className="mx-auto w-full max-w-[300px]" // Rasmni markazlashtirish va o'lchamini belgilash
+            className="mx-auto w-full max-w-[300px]"
           />
         )}
       </div>
-      <div className="grid grid-cols-4 gap-8 max-[1240px]:grid-cols-3 max-[990px]:grid-cols-2 max-[620px]:gap-2">
-        {products && products.length > 0 ? (
-          products.map((product) => (
-            <div
-              key={product.id}
-              className="relative group overflow-hidden rounded-lg shadow-md"
-            >
-              {/* Product Image */}
-              <div className="relative w-full h-[301px] max-[620px]:h-[240px] max-[430px]:h-[200px]">
-                <img
-                  onClick={() => navigate(`/product/${product.id}`)} // Navigate qo‘shildi
-                  className="w-full h-full bg-no-repeat bg-center bg-cover"
-                  src={`${product.image[0]}`}
-                  alt={product.title}
-                />
-              </div>
+      <div className=" grid grid-cols-4 gap-8 max-[1240px]:grid-cols-3 max-[990px]:grid-cols-2 max-[620px]:gap-2">
+        {products?.length > 0 ? (
+          products.map((product) => {
+            const discount = Number(product.discount) || 0;
+            const discountPrice =
+              discount > 0
+                ? product.price - (product.price * discount) / 100
+                : product.price;
 
-              <div>
-                <button className="absolute top-10 right-1 w-[30px] h-[30px] bg-white rounded-full flex items-center justify-center text-[20px]">
-                  <IoCartOutline />
-                </button>
-                <Heart product={product} />
-              </div>
+            return (
+              <div
+                key={product.id}
+                className="relative group overflow-hidden rounded-lg shadow-md"
+              >
+                <div className="relative w-full h-[301px] max-[620px]:h-[240px] max-[430px]:h-[200px] overflow-hidden">
+                  <img
+                    onClick={() => navigate(`/product/${product.id}`)}
+                    className="w-full h-full bg-no-repeat bg-center bg-cover duration-300 md:scale-100 cursor-pointer 
+                  group-hover:opacity-100 group-hover:scale-110"
+                    src={product.image[0]}
+                    alt={product.title}
+                  />
+                </div>
 
-              {/* Product Details */}
-              <div className="py-4 px-4 bg-[#F4F5F7] transition-colors duration-300">
-                <h2
-                  title={product.title}
-                  className="line-clamp-1 text-[24px] font-semibold leading-8 max-[620px]:text-lg"
-                >
-                  {product.title}
-                </h2>
-                <p
-                  title={product.description}
-                  className="line-clamp-1 text-[#898989] text-lg max-[620px]:text-sm"
-                >
-                  {product.description}
-                </p>
-                <strong className="text-[#3A3A3A] text-[20px] leading-8 font-semibold max-[620px]:text-[15px]">
-                  {product.price.toLocaleString()} USD
-                </strong>
+                <div className="absolute top-2 flex flex-col gap-2 max-sm:gap-1 right-[-50px] group-hover:right-2 duration-300 max-md:right-2">
+                  <Heart product={product} />
+                  <CartButton product={product} />
+                </div>
+                {discount > 0 && <Discount percent={discount} />}
+
+                <div className="container py-4 px-4 bg-white transition-colors duration-300">
+                  <h2
+                    title={product.title}
+                    className="line-clamp-1 text-[24px] font-semibold leading-8 max-[620px]:text-lg"
+                  >
+                    {product.title}
+                  </h2>
+                  <p
+                    title={product.description}
+                    className="line-clamp-1 text-[#898989] text-lg max-[620px]:text-sm"
+                  >
+                    {product.description}
+                  </p>
+                  <strong className="text-[#3A3A3A] dark:text-slate-200 text-[20px] leading-8 font-semibold max-[620px]:text-[15px]">
+                    {discountPrice.toLocaleString()} USD
+                  </strong>
+
+                  {discount > 0 && (
+                    <s className="ml-2 text-gray-400">
+                      {product.price.toLocaleString()} USD
+                    </s>
+                  )}
+                </div>
               </div>
-            </div>
-          ))
+            );
+          })
         ) : (
           <p className="font-poppins-bold mb-8 text-center max-[620px]:text-2xl">
             It seems like you haven't added anything to your wishlist yet.

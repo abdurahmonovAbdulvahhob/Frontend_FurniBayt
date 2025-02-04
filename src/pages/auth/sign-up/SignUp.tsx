@@ -57,7 +57,7 @@ const SignUp = () => {
         dispatch(
           saveEmail({
             email: data.email,
-            verification_key: res.verification_key, // mana shu yerni tekshiring
+            // verification_key: res.verification_key, // mana shu yerni tekshiring
           })
         );
         createOtp({ email: data.email })

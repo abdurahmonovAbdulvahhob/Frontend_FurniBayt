@@ -11,8 +11,7 @@ import ShopAdvantage from "../../components/Shop_advantage/Shop_advantage";
 const Shop = () => {
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(16);
-  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
-  const [sortOrder, setSortOrder] = useState<string>("default"); 
+  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false); // Filter ochilgan yoki yopilganligini nazorat qilish
 
   const { data, isLoading } = useGetProductsQuery({ limit, page });
 
@@ -43,18 +42,6 @@ const Shop = () => {
 
   const toggleFilter = () => {
     setIsFilterOpen(!isFilterOpen);
-  };
-
-  const sortedProducts = data?.data?.products
-    ? [...data.data.products].sort((a, b) => {
-        if (sortOrder === "price-asc") return a.price - b.price; 
-        if (sortOrder === "price-desc") return b.price - a.price; 
-        return 0;
-      })
-    : [];
-
-  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortOrder(event.target.value);
   };
 
   return (
@@ -98,17 +85,11 @@ const Shop = () => {
               />
             </div>
             <div className="flex gap-3 items-center cursor-pointer hover:text-bg-primary duration-300">
-              <label htmlFor="sort">Sort by</label>
-              <select
-                id="sort"
-                value={sortOrder}
-                onChange={handleSortChange}
+              <p>Sort by</p>
+              <input
+                placeholder="Default"
                 className="w-[188px] h-[55px] bg-white dark:bg-slate-100 outline-none text-[20px] indent-3 rounded-sm text-bg-primary"
-              >
-                <option value="default">Default</option>
-                <option value="price-asc">Low to High</option>
-                <option value="price-desc">High to Low</option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -127,8 +108,8 @@ const Shop = () => {
             Loading ...
           </p>
         )}
-        {sortedProducts.length > 0 ? (
-          <Products products={sortedProducts} />
+        {data?.data?.products && data.data.products.length > 0 ? (
+          <Products products={data.data.products} />
         ) : (
           <p className="text-center text-xl font-semibold text-gray-700 dark:text-white">
             Product not found
