@@ -12,13 +12,17 @@ import { saveToken } from "@/redux/features/token-slice";
 import Timer from "./Timer";
 import { clearOtp } from "@/redux/features/otp-slice";
 import OTP from "./OtpElement";
+import { useSetWishlistMutation } from "@/redux/api/wishlist-api";
+import { clearWishlist } from "@/redux/features/wishlist-slice";
+import { useParamsHook } from "../../../hooks/useParamsHook";
 
 export default function OTPInput() {
-  const {
-    email,
-    verification_key
-  } = useSelector((state: RootState) => state.otp);
+  const { email } = useSelector((state: RootState) => state.otp);
   const dispatch = useDispatch();
+  const { getParam } = useParamsHook();
+
+  const wishlist = useSelector((state: RootState) => state.wishlist.value);
+  const [setWishlist] = useSetWishlistMutation();
 
   const [otp, setOtp] = React.useState("");
   const [reload, setReload] = React.useState(true);
@@ -46,7 +50,6 @@ export default function OTPInput() {
       verifyOtp({
         email,
         otp,
-        verification_key
       })
         .unwrap()
         .then((res) => {
@@ -54,13 +57,25 @@ export default function OTPInput() {
             dispatch(clearOtp());
           }, 300);
           dispatch(saveToken(res.access_token));
-          navigate("/auth/profile");
+          if (wishlist.length) {
+            setWishlist({
+              customerId: res?.id,
+              wishlist: wishlist.map((item) => item.id),
+            })
+              .unwrap()
+              .then(() => {
+                dispatch(clearWishlist());
+              });
+          }
+          getParam("q") === "checkout"
+            ? navigate("/checkout")
+            : navigate("/auth/profile/self");
         });
     }
   }, [otp]);
 
   return !email ? (
-    <Navigate replace to={"/auth/sign-up"} />
+    <Navigate replace to={"/auth/sign-in"} />
   ) : (
     <Box
       sx={{
@@ -70,6 +85,7 @@ export default function OTPInput() {
         minHeight: "100vh",
         justifyContent: "center",
         gap: 2,
+        padding: { xs: 2, sm: 4 },
       }}
     >
       <Box
@@ -82,21 +98,24 @@ export default function OTPInput() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          paddingX: { xs: 2, sm: 4 }, // Responsive padding for mobile screens
         }}
       >
-        <Typography variant="h5" component="h2" sx={{ mb: "10px" }}>
+        <Typography
+          variant="h5"
+          component="h2"
+          sx={{ mb: "10px", fontSize: { xs: "20px", sm: "24px" } }}
+        >
           Enter verification code
         </Typography>
         {(error as any)?.status === 401 ? (
-          <p className=" text-red-500 mb-6">
+          <p className="text-red-500 mb-6 text-center">
             Your email is not correct. Please check again ({email})
           </p>
         ) : (
-          <>
-            <p className=" text-gray-500 mb-6">
-              Your code was sent to your via email ({email})
-            </p>
-          </>
+          <p className="text-gray-500 mb-6 text-center">
+            Your code was sent to your email ({email})
+          </p>
         )}
         <OTP
           error={isError}
@@ -108,7 +127,7 @@ export default function OTPInput() {
           length={4}
         />
         {(error as any)?.status === 401 && (
-          <Link to="/auth/sign-up" className="mt-6">
+          <Link to="/auth/sign-in" className="mt-6 text-indigo-500">
             Go back
           </Link>
         )}
@@ -121,7 +140,7 @@ export default function OTPInput() {
           <Timer
             reload={reload}
             callback={createNewOtp}
-            time={120}
+            time={180}
             className="mt-6 text-gray-500"
           />
         )}

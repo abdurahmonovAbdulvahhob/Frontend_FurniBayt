@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -10,6 +10,9 @@ import { saveToken } from "@/redux/features/token-slice";
 import { saveStorage } from "@/utils";
 import { saveEmail } from "@/redux/features/otp-slice";
 import { RootState } from "@/redux";
+import { useSetWishlistMutation } from "@/redux/api/wishlist-api";
+import { clearWishlist } from "@/redux/features/wishlist-slice";
+import { useParamsHook } from "../../../hooks/useParamsHook";
 
 const schema = yup.object({
   email: yup
@@ -29,11 +32,12 @@ interface ISignIn {
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const token = useSelector((state: RootState) => state.token.access_token);
-  if (token) {
-    return <Navigate replace to={"/auth/profile"} />;
-  }
+  const { getParam } = useParamsHook();
+
   const [showPassword, setShowPassword] = useState(false);
+  const wishlist = useSelector((state: RootState) => state.wishlist.value);
+  const [setWishlist] = useSetWishlistMutation();
+
   const [signIn] = useSignInMutation();
   const [lgError, setlgError] = useState("");
   const togglePasswordVisibility = () => {
@@ -58,14 +62,27 @@ const SignIn = () => {
     signIn(data)
       .unwrap()
       .then((res) => {
-        dispatch(saveToken(res?.data?.access_token));
-        saveStorage("access_token", res?.data?.access_token);
-        saveEmail({
-          email: res?.data?.payload.otp_email,
-          verification_key: res?.data?.payload.verification_key,
-        });
-        setlgError("");
-        navigate("/auth/profile");
+        if (res?.data?.is_active) {
+          dispatch(saveToken(res?.data?.access_token));
+          saveStorage("access_token", res?.data?.access_token);
+          setlgError("");
+          if (wishlist.length) {
+            setWishlist({
+              customerId: res?.data?.id,
+              wishlist: wishlist.map((item) => item.id),
+            })
+              .unwrap()
+              .then(() => {
+                dispatch(clearWishlist());
+              });
+          }
+          getParam("q") === "checkout"
+            ? navigate("/checkout")
+            : navigate("/auth/profile/self");
+        } else {
+          dispatch(saveEmail({ email: data.email }));
+          return navigate("/auth/otp");
+        }
       })
       .catch((err) => {
         const errorMessage = err?.data?.message;
@@ -105,7 +122,7 @@ const SignIn = () => {
                 errors.email
                   ? "border-red-500"
                   : "border-gray-300 dark:border-gray-600"
-              } rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-all bg-gray-50 dark:bg-gray-700 dark:text-white`}
+              } rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-gray-50 dark:bg-gray-700 dark:text-white`}
               placeholder="your@email.com"
             />
             {errors.email && (
@@ -127,7 +144,7 @@ const SignIn = () => {
                   errors.password
                     ? "border-red-500"
                     : "border-gray-300 dark:border-gray-600"
-                } rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-all bg-gray-50 dark:bg-gray-700 dark:text-white`}
+                } rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-gray-50 dark:bg-gray-700 dark:text-white`}
                 placeholder="••••••••"
               />
               <span
@@ -148,7 +165,7 @@ const SignIn = () => {
             <label className="flex items-center">
               <input
                 type="checkbox"
-                className="rounded border-gray-300 dark:border-gray-600 text-yellow-600 focus:ring-yellow-500"
+                className="rounded border-gray-300 dark:border-gray-600 text-indigo-600 focus:ring-indigo-500"
               />
               <span className="ml-2 text-sm text-gray-600 dark:text-gray-300">
                 Remember me
@@ -156,13 +173,13 @@ const SignIn = () => {
             </label>
             <Link
               to={"#"}
-              className="text-sm text-yellow-600 dark:text-yellow-700 hover:text-yellow-500"
+              className="text-sm text-black dark:text-white hover:text-bg-primary"
             >
               Forgot password?
             </Link>
           </div>
 
-          <button className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-2.5 rounded-lg transition-colors">
+          <button className="w-full bg-bg-primary text-white font-medium py-2.5 rounded-lg transition-colors">
             Sign In
           </button>
         </form>
@@ -170,8 +187,8 @@ const SignIn = () => {
         <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-300">
           Don't have an account?{" "}
           <Link
-            to={token ? "/auth/profile" : "/auth/sign-up"}
-            className="text-yellow-600 dark:text-yellow-400 hover:text-yellow-500"
+            to={"/auth/sign-up"}
+            className="font-medium text-primary-600 hover:underline dark:text-primary-500"
           >
             Sign up
           </Link>

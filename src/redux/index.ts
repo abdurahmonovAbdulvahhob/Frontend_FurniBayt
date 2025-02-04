@@ -4,6 +4,7 @@ import tokenSlice from "./features/token-slice";
 import otpSlice from "./features/otp-slice";
 import  wishlistSlice  from "./features/wishlist-slice";
 import  customerSlice  from "./features/customer-slice";
+import { cartSlice } from "./features/cart-slice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,8 @@ export const store = configureStore({
     token: tokenSlice,
     customer: customerSlice,
     wishlist: wishlistSlice,
+    cart: cartSlice.reducer,
+
     [mainApi.reducerPath]: mainApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

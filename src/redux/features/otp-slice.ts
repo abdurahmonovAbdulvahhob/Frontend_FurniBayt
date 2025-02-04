@@ -3,8 +3,8 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface OTPState {
-  email: string;
-  verification_key: string;
+  email: string,
+  verification_key?: string
 }
 
 const initialState: OTPState = {
@@ -18,17 +18,13 @@ export const otpSlice = createSlice({
   reducers: {
     saveEmail: (
       state,
-      action: PayloadAction<{ email: string; verification_key: string }>
+      action: PayloadAction<{ email: string;}>
     ) => {
       state.email = action.payload.email;
-      state.verification_key = action.payload.verification_key;
+      // state.verification_key = action.payload.verification_key;
       saveStorage("otp_email", action.payload.email);
-      saveStorage("verification_key", action.payload.verification_key);
-      sessionStorage.setItem("otp_email", action.payload.email);
-      sessionStorage.setItem(
-        "verification_key",
-        action.payload.verification_key
-      );
+
+      // saveStorage("verification_key", action.payload.verification_key)
     },
     clearOtp: (state) => {
       state.email = "";

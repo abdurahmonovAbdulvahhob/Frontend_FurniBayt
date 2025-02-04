@@ -133,6 +133,8 @@ const HeaderSearch: FC<{
               "Coffee Table",
               "Wardrobe",
               "Armchair",
+              "living room",
+            
             ].map((term) => (
               <span
                 key={term}

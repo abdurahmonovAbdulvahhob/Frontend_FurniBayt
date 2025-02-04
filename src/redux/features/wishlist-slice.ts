@@ -28,8 +28,12 @@ export const wishlistSlice = createSlice({
       }
       saveStorage("wishlist", state.value);
     },
+    clearWishlist: (state) => {
+      state.value = [];
+      localStorage.removeItem("wishlist");
+    },
   },
 });
 
-export const { toggleLike } = wishlistSlice.actions;
+export const { toggleLike, clearWishlist } = wishlistSlice.actions;
 export default wishlistSlice.reducer;

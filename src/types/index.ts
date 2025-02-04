@@ -15,8 +15,9 @@ export interface IReview {
 }
 export interface IProduct {
   categroyId?: number;
+  data?: any;
   id: number;
-  title: string;
+  title?: string;
   stock: number;
   image: string[];
   description: string;
@@ -26,10 +27,9 @@ export interface IProduct {
   colors: string[];
   tags: string[];
   is_liked?: boolean;
-  discount?: {
-    percent?: number;
-  };
-  reviews?: IReview[];
+  discount?: number;
+  discount_price: number;
+  reviews: IReview[];
 }
 export interface IProductQuery {
   filter?: string;
@@ -52,6 +52,7 @@ export interface IGetResponseSingleProduct {
   data: IGetSingleProduct;
   message: string;
   statusCode: number;
+  categoryId?: number; // Bu yerga categoryId qo'shilgan
 }
 export interface IGetSingleProduct {
   product: {
@@ -74,6 +75,7 @@ export interface IGetSingleProduct {
       comment: string;
   };
   };
+  
 }
 export interface ICustomerDataResponse {
   statusCode: number;
@@ -87,4 +89,8 @@ export interface OtpResponse {
   access_token: string;
   statusCode: number;
   message: string;
+}
+export interface IReview {
+  id: number;
+  comment: string;
 }

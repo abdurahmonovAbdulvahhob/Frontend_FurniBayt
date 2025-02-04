@@ -1,4 +1,4 @@
-import { ICustomer, ICustomerDataResponse, OtpResponse } from "@/types";
+import { ICustomer, ICustomerDataResponse } from "@/types";
 import { mainApi } from "./index";
 
 const extendedApi = mainApi.injectEndpoints({
@@ -12,11 +12,11 @@ const extendedApi = mainApi.injectEndpoints({
     }),
     checkToken: build.query<any, any>({
       query: () => ({
-        url: "auth/check-token",
+        url: "customer/auth/check-token",
         method: "GET",
       }),
     }),
-    createOtp: build.mutation<OtpResponse, { email: string }>({
+    createOtp: build.mutation<any, { email: string }>({
       query: (body) => ({
         url: "auth/newotp",
         method: "POST",
@@ -24,11 +24,11 @@ const extendedApi = mainApi.injectEndpoints({
       }),
     }),
     verifyOtp: build.mutation<
-      OtpResponse,
-      { email: string; otp: string; verification_key: string }
+      any,
+      { email: string; otp: string; verification_key?: string }
     >({
       query: (body) => ({
-        url: "otp/verify-otp",
+        url: "auth/verifyotp",
         method: "POST",
         body,
       }),
@@ -46,6 +46,12 @@ const extendedApi = mainApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    signOut: build.mutation<any, any>({
+      query: () => ({
+        url: "auth/signout-customer",
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -56,4 +62,5 @@ export const {
   useSignInMutation,
   useGetCustomerByIdQuery,
   useCheckTokenQuery,
+  useSignOutMutation,
 } = extendedApi;

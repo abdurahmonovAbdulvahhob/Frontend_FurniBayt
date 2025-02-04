@@ -1,6 +1,15 @@
-import React from "react";
 import { Input as BaseInput } from "@mui/base/Input";
 import { Box, styled } from "@mui/system";
+import * as React from "react";
+// import { Typography } from "@mui/material";
+// import {
+//   useCreateOtpMutation,
+//   useVerifyOtpMutation,
+// } from "@/redux/api/customer-api";
+// import { Navigate, useNavigate } from "react-router-dom";
+// import { useDispatch, useSelector } from "react-redux";
+// import { RootState } from "@/redux";
+// import { saveToken } from "@/redux/features/token-slice";
 
 export default function OTP({
   separator,
@@ -8,15 +17,15 @@ export default function OTP({
   value,
   onChange,
   loading,
-  error,
-  success,
-}: {
+}: // error,
+// success,
+{
   separator: React.ReactNode;
   length: number;
   value: string;
   loading: boolean;
-  error: boolean;
   success: boolean;
+  error: boolean;
   onChange: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const inputRefs = React.useRef<HTMLInputElement[]>(
@@ -116,7 +125,7 @@ export default function OTP({
   };
 
   const handleClick = (
-    event: React.MouseEvent<HTMLInputElement, MouseEvent>,
+    _event: React.MouseEvent<HTMLInputElement, MouseEvent>,
     currentIndex: number
   ) => {
     selectInput(currentIndex);
@@ -167,7 +176,6 @@ export default function OTP({
             }}
             aria-label={`Digit ${index + 1} of OTP`}
             disabled={loading}
-            autoFocus={index === 0}
             slotProps={{
               input: {
                 ref: (ele) => {
@@ -178,13 +186,6 @@ export default function OTP({
                 onClick: (event) => handleClick(event, index),
                 onPaste: (event) => handlePaste(event, index),
                 value: value[index] ?? "",
-                style: {
-                  border: error
-                    ? "1px solid crimson"
-                    : success
-                    ? "1px solid green"
-                    : "1px solid #DAE2ED",
-                },
               },
             }}
           />
@@ -194,6 +195,7 @@ export default function OTP({
     </Box>
   );
 }
+
 const blue = {
   100: "#DAECFF",
   200: "#80BFFF",
@@ -218,42 +220,40 @@ const grey = {
 
 const InputElement = styled("input")(
   ({ theme }) => `
-    width: 40px;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1.5;
-    padding: 8px 0;
-    border-radius: 8px;
-    text-align: center;
-    color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
-    background: ${theme.palette.mode === "dark" ? grey[900] : "#fff"};
-    border: 1px solid ${theme.palette.mode === "dark" ? grey[700] : grey[200]};
-    box-shadow: 0 2px 4px ${
-      theme.palette.mode === "dark" ? "rgba(0,0,0, 0.5)" : "rgba(0,0,0, 0.05)"
+  width: 40px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 8px 0;
+  border-radius: 8px;
+  text-align: center;
+  color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
+  background: ${theme.palette.mode === "dark" ? grey[900] : "#fff"};
+  border: 1px solid ${theme.palette.mode === "dark" ? grey[700] : grey[200]};
+  box-shadow: 0 2px 4px ${
+    theme.palette.mode === "dark" ? "rgba(0,0,0, 0.5)" : "rgba(0,0,0, 0.05)"
+  };
+
+  &:hover {
+    border-color: ${blue[400]};
+  }
+
+  &:focus {
+    border-color: ${blue[400]};
+    box-shadow: 0 0 0 3px ${
+      theme.palette.mode === "dark" ? blue[600] : blue[200]
     };
-  
-    &:hover {
-      border-color: ${blue[400]};
-    }
-  
-    &:focus {
-      border-color: ${blue[400]};
-      box-shadow: 0 0 0 3px ${
-        theme.palette.mode === "dark" ? blue[600] : blue[200]
-      };
-    }
-  
-    &:disabled{
-      opacity: 0.7;
-      border: 1px solid ${
-        theme.palette.mode === "dark" ? grey[700] : grey[200]
-      };
-    }
-  
-    /* firefox */
-    &:focus-visible {
-      outline: 0;
-    }
-  `
+  }
+
+  &:disabled{
+    opacity: 0.7;
+    border: 1px solid ${theme.palette.mode === "dark" ? grey[700] : grey[200]};
+  }
+
+  /* firefox */
+  &:focus-visible {
+    outline: 0;
+  }
+`
 );
