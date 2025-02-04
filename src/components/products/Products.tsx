@@ -10,7 +10,7 @@ interface IProductProps {
   title?: string;
 }
 
-const Products = ({ products }: IProductProps) => {
+const Products: FC<IProductProps> = ({ products }: IProductProps) => {
   const navigate = useNavigate();
 
   return (
