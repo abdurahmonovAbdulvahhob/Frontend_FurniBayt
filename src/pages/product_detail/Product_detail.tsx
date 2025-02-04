@@ -8,11 +8,16 @@ import ProductInfo from "./ProductInfo";
 import ProductTabs from "./ProductTabs";
 
 const ProductDetail = () => {
-  const { id } = useParams();
-  const { data, isError, error, isLoading } = useGetSingleProductQuery(id);
-  const { data: relatedProducts } = useGetProductsByCategoryQuery(
-    data?.data?.product?.categoryId
-  );
+ const { id } = useParams();
+ const numericId = id ? Number(id) : null;
+
+ const { data, isError, error, isLoading } = useGetSingleProductQuery(
+   numericId!,
+   { skip: !numericId }
+ );
+ const { data: relatedProducts } = useGetProductsByCategoryQuery(
+   data?.data?.product?.categoryId
+ );
 
   useEffect(() => {
     window.scrollTo(0, 0);

@@ -23,7 +23,7 @@ const extendedApi = mainApi.injectEndpoints({
         method: "GET",
         params: { categoryId },
       }),
-      providesTags: ["Products"],
+      providesTags: ["Product"],
     })
   }),
 });
